@@ -1,0 +1,48 @@
+SegundoUso\AdBundle\Entity\Ad:
+    type: entity
+    table: ads
+#    repositoryClass: SegundoUso\AdBundle\Repository\AdRepository
+    uniqueConstraints:
+        IDX_MAN_ANNOUNCEMENT_PID:
+          columns: [ pid ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+        description:
+            type: text
+        location:
+            type: string
+        pid:
+            type: string
+            lenght: 64
+        published:
+            type: boolean
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                  on: create
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable:
+                  on: update
+    manyToOne:
+        category:
+            targetEntity: Category
+            inversedBy: ads
+            joinColumn:
+                name: category_id
+                referencedColumnName: id
+                nullable: false
+            cascade: ['persist']
+    lifecycleCallbacks: { }

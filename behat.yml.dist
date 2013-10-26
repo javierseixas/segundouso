@@ -1,0 +1,18 @@
+default:
+    context:
+        parameters:
+            base_url: http://segundouso.local
+        class: SegundoUso\BehatBundle\Context\FeatureContext
+    paths:
+        features: features
+        bootstrap: %behat.paths.features%/bootstrap
+    extensions:
+        Behat\Symfony2Extension\Extension:
+            mink_driver: true
+            kernel:
+              env: test
+        Behat\MinkExtension\Extension:
+            base_url: http://segundouso.local
+            selenium2: ~
+            sahi: ~
+            default_session: sahi

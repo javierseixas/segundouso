@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,600' rel='stylesheet' type='text/css'>
+    {% stylesheets filter='compass,cssrewrite' output='css/styles.css'
+    "@SegundoUsoFrontendBundle/Resources/assets/css/fonts.scss"
+    "@SegundoUsoFrontendBundle/Resources/assets/css/vars.scss"
+    "@SegundoUsoFrontendBundle/Resources/assets/css/style.scss"
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" media="screen" />
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <div class="page-wrap">
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6"><a href="{{ path('segundo_uso_frontend_homepage') }}"><img src="{{ asset('bundles/segundousofrontend/img/logo-segundo-uso.png') }}"></a></div>
+                    <div class="col-md-6"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>Sobre segundouso.org</h4>
+                    <ul>
+                        <li><a href="">Manifiesto</a></li>
+                        <li><a href="">Sobre la web</a></li>
+                        <li><a href="">Colaborar</a></li>
+                        <li><a href="">Contactar</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row copyright">
+                <div class="col-md-12">&copy; SegundoUso.org {{ "now" | date('Y') }}</div>
+            </div>
+        </div>
+    </footer>
+
+{% endblock body %}

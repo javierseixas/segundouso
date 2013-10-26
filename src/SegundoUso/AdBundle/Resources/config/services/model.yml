@@ -1,0 +1,8 @@
+parameters:
+    seguso.ad_manager.class: SegundoUso\AdBundle\Model\AdManager
+    seguso.ad.class: SegundoUso\AdBundle\Entity\Ad
+
+services:
+    seguso.ad_manager:
+        class: %seguso.ad_manager.class%
+        arguments: [@seguso.ad.util.pid_generator, @doctrine.orm.entity_manager, %seguso.ad.class%]

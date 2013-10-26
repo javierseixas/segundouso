@@ -1,0 +1,11 @@
+segundo_uso_frontend_homepage:
+    pattern:  /
+    defaults: { _controller: SegundoUsoFrontendBundle:Home:home }
+
+segundo_uso_frontend_announcement_create:
+    pattern: /anuncio/crear
+    defaults: { _controller: SegundoUsoAdBundle:Default:create }
+
+segundo_uso_frontend_announcement_confirm_instructions:
+    pattern: /anuncio/instrucciones-confirmacion
+    defaults: { _controller: SegundoUsoAdBundle:Default:confirm_instructions }
