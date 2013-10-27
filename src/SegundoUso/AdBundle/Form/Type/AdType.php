@@ -25,6 +25,7 @@ class AdType extends AbstractType
                 'label' => 'Categoría',
                 'empty_value' => "Selecciona una categoría"
             ))
+            ->add('advertiser', 'advertiser_email')
         ;
     }
 

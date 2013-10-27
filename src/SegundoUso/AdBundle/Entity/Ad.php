@@ -54,6 +54,11 @@ class Ad implements AdInterface
      */
     private $category;
 
+    /**
+     * @var \SegundoUso\AdBundle\Entity\Advertiser
+     */
+    private $advertiser;
+
 
     /**
      * Get id
@@ -248,4 +253,23 @@ class Ad implements AdInterface
     {
         return $this->category;
     }
+
+    /**
+     * @param \SegundoUso\AdBundle\Entity\Advertiser $advertiser
+     */
+    public function setAdvertiser($advertiser)
+    {
+        $this->advertiser = $advertiser;
+        return $this;
+    }
+
+    /**
+     * @return \SegundoUso\AdBundle\Entity\Advertiser
+     */
+    public function getAdvertiser()
+    {
+        return $this->advertiser;
+    }
+
+
 }

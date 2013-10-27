@@ -34,6 +34,11 @@
                 {{ form_errors(form.category, {'attr': {'class':'col-md-8'}}) }}
             </div>
             <div class="form-group">
+                {{ form_label(form.advertiser, 'Email', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
                 <div class="col-md-offset-2"><button class="btn btn-primary">Publicar</button></div>
             </div>
             {{ form_end(form) }}

@@ -1,0 +1,9 @@
+parameters:
+    seguso.ad.type.advertiser_email.class: SegundoUso\AdBundle\Form\Type\AdvertiserEmailType
+
+services:
+    seguso.ad.type.advertiser_email:
+        class: %seguso.ad.type.advertiser_email.class%
+        arguments: [@seguso.advertiser_manager]
+        tags:
+            - {name: form.type, alias: advertiser_email}

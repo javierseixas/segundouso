@@ -45,4 +45,12 @@ SegundoUso\AdBundle\Entity\Ad:
                 referencedColumnName: id
                 nullable: false
             cascade: ['persist']
+        advertiser:
+            targetEntity: Advertiser
+            inversedBy: ads
+            joinColumn:
+                name: advertiser_id
+                referenceColumnName: id
+                nullable: true
+            cascade: ['persist']
     lifecycleCallbacks: { }

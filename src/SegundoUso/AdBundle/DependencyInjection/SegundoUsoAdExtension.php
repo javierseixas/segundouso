@@ -25,5 +25,6 @@ class SegundoUsoAdExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
         $loader->load('services.yml');
         $loader->load('model.yml');
+        $loader->load('forms.yml');
     }
 }
