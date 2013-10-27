@@ -38,6 +38,6 @@ class AdType extends AbstractType
 
     public function getName()
     {
-        return 'announcement';
+        return 'ad';
     }
 }

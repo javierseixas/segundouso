@@ -2,10 +2,10 @@ segundo_uso_frontend_homepage:
     pattern:  /
     defaults: { _controller: SegundoUsoFrontendBundle:Home:home }
 
-segundo_uso_frontend_announcement_create:
+segundo_uso_frontend_ad_create:
     pattern: /anuncio/crear
     defaults: { _controller: SegundoUsoAdBundle:Default:create }
 
-segundo_uso_frontend_announcement_confirm_instructions:
-    pattern: /anuncio/instrucciones-confirmacion
-    defaults: { _controller: SegundoUsoAdBundle:Default:confirm_instructions }
+segundo_uso_frontend_ad_waiting_confirmation:
+    pattern: /anuncio/por-confirmar
+    defaults: { _controller: SegundoUsoAdBundle:Default:waitingConfirmation }

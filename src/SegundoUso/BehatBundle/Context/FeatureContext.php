@@ -2,7 +2,6 @@
 
 namespace SegundoUso\BehatBundle\Context;
 
-
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
@@ -10,14 +9,15 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 use Behat\CommonContexts\SymfonyDoctrineContext;
-use Behat\MinkExtension\Context\MinkContext;
+use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Features context.
  */
-class FeatureContext extends MinkContext implements KernelAwareInterface
+class FeatureContext extends RawMinkContext implements KernelAwareInterface
 {
     /**
      * @param array $parameters context parameters (set them up through behat.yml)
@@ -26,7 +26,7 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     {
         $this->parameters = $parameters;
 
-        $this->useContext('symfony_doctrine_context',  new SymfonyDoctrineContext);
+        $this->useContext('web',  new WebContext());
     }
 
     /**
@@ -41,13 +41,24 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
-     * @Then /^I should not be logged in$/
+     * @BeforeScenario
      */
-    public function iShouldNotBeLoggedIn()
+    public function purgeDatabase()
     {
-        if ($this->getSecurityContext()->isGranted('ROLE_USER')) {
-            throw new AuthenticationException('User was not expected to be logged in, but he is.');
-        }
+        $entityManager = $this->kernel->getContainer()->get('doctrine.orm.entity_manager');
+
+        $purger = new ORMPurger($entityManager);
+        $purger->purge();
+    }
+
+    /**
+     * Returns Container instance.
+     *
+     * @return ContainerInterface
+     */
+    private function getContainer()
+    {
+        return $this->kernel->getContainer();
     }
 
 }

@@ -1,3 +1,3 @@
-segundo_uso_announcement_homepage:
+segundo_uso_ad_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: SegundoUsoAdBundle:Default:index }

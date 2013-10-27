@@ -4,7 +4,7 @@ namespace SegundoUso\AdBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AdvertiserManager implements AdvertiserManagerInterface
+class CategoryManager implements CategoryManagerInterface
 {
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
@@ -28,30 +28,22 @@ class AdvertiserManager implements AdvertiserManagerInterface
     }
 
     /**
-     * @return AdvertiserInterface
+     * @return CategoryInterface
      */
-    public function createAdvertiser()
+    public function createCategory()
     {
         $class = $this->class;
-        $advertiser = new $class;
+        $category = new $class;
 
-        return $advertiser;
+        return $category;
     }
 
-    public function updateAdvertiser(AdvertiserInterface $advertiser, $andFlush = true)
+    public function updateCategory(CategoryInterface $category, $andFlush = true)
     {
-        $this->objectManager->persist($advertiser);
+        $this->objectManager->persist($category);
         if ($andFlush) {
             $this->objectManager->flush();
         }
     }
 
-    /**
-     * @param $email
-     * @return \SegundoUso\AdBundle\Entity\Advertiser|null
-     */
-    public function findByEmail($email)
-    {
-        return $this->repository->findOneBy(array('email' => $email));
-    }
 }

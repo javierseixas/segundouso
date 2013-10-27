@@ -33,7 +33,7 @@ class DefaultController extends Controller
 
             $dispatcher->dispatch(SegundoUsoAdEvents::AD_CREATE_COMPLETED, new AdEvent($ad));
 
-            return $this->redirect($this->generateUrl('task_success'));
+            return $this->redirect($this->generateUrl('segundo_uso_frontend_ad_waiting_confirmation'));
         }
 
         return $this->render('SegundoUsoAdBundle:Default:create.html.twig', array(
@@ -41,8 +41,8 @@ class DefaultController extends Controller
         ));
     }
 
-    public function confirmInstructionsAction()
+    public function waitingConfirmationAction()
     {
-        return $this->render('SegundoUsoAdBundle:Default:confirm_instructions.html.twig');
+        return $this->render('SegundoUsoAdBundle:Default:waiting_confirmation.html.twig');
     }
 }

@@ -8,10 +8,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ path('segundo_uso_frontend_announcement_create') }}" method="post">
-            </form>
 
-            {{ form_start(form, {'method':'POST', 'action':path('segundo_uso_frontend_announcement_create'), 'attr':{'class':'form-horizontal'}}) }}
+            {{ form_start(form, {'method':'POST', 'action':path('segundo_uso_frontend_ad_create'), 'attr':{'class':'form-horizontal', 'id':'FLAG_new-ad-form'}}) }}
             {{ form_errors(form) }}
             <div class="form-group">
                 {{ form_label(form.title, 'Título', {'label_attr': {'class':'col-md-2'}}) }}
@@ -39,7 +37,7 @@
                 {{ form_errors(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
             </div>
             <div class="form-group">
-                <div class="col-md-offset-2"><button class="btn btn-primary">Publicar</button></div>
+                <div class="col-md-offset-2"><button id="FLAG_send-new-ad-form" class="btn btn-primary">Publicar</button></div>
             </div>
             {{ form_end(form) }}
         </div>

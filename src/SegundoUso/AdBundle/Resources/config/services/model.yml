@@ -3,11 +3,16 @@ parameters:
     seguso.advertiser.class: SegundoUso\AdBundle\Entity\Advertiser
     seguso.ad_manager.class: SegundoUso\AdBundle\Model\AdManager
     seguso.ad.class: SegundoUso\AdBundle\Entity\Ad
+    seguso.category_manager.class: SegundoUso\AdBundle\Model\CategoryManager
+    seguso.category.class: SegundoUso\AdBundle\Entity\Category
 
 services:
     seguso.ad_manager:
         class: %seguso.ad_manager.class%
         arguments: [@seguso.ad.util.pid_generator, @doctrine.orm.entity_manager, %seguso.ad.class%]
     seguso.advertiser_manager:
-            class: %seguso.advertiser_manager.class%
-            arguments: [@doctrine.orm.entity_manager, %seguso.advertiser.class%]
+        class: %seguso.advertiser_manager.class%
+        arguments: [@doctrine.orm.entity_manager, %seguso.advertiser.class%]
+    seguso.category_manager:
+        class: %seguso.category_manager.class%
+        arguments: [@doctrine.orm.entity_manager, %seguso.category.class%]
