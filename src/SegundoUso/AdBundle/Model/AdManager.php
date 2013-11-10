@@ -43,7 +43,7 @@ class AdManager implements AdManagerInterface
 
     public function updateAd(AdInterface $ad, $andFlush = true)
     {
-        $this->setPublicId($ad);
+        if (null === $ad->getPid()) $this->setPublicId($ad);
 
         $this->objectManager->persist($ad);
         if ($andFlush) {
@@ -51,8 +51,24 @@ class AdManager implements AdManagerInterface
         }
     }
 
+    public function publishAd(AdInterface $ad)
+    {
+        $ad->setPublished(true);
+        $this->updateAd($ad);
+    }
+
+    public function findByPid($pid)
+    {
+        return $this->repository->findOneBy(array('pid' => $pid));
+    }
+
     protected function setPublicId(AdInterface $ad)
     {
         $ad->setPid($this->pidGenerator->generate());
+    }
+
+    public function findAllPublished()
+    {
+        return $this->repository->findBy(array('published' => true));
     }
 }

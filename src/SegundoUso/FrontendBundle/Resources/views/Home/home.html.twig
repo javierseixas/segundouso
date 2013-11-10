@@ -8,6 +8,32 @@
         <p><a href="{{ path('segundo_uso_frontend_ad_create') }}" class="btn btn-success btn-lg claim-cta" id="FLAG_new-ad">Tengo algo que ofrecer</a></p>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well home-search">
+                <form role="form" action="{{ path('segundo_uso_frontend_ad_list') }}" method="post" class="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="title">Quizá alguien esté ofreciendo algo que tú necesitas</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span><select class="categories">
+                                <option value="">Elige una categoría</option>
+                                {% for category in categories %}
+                                    <option class="form-control" value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select></span>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-lg claim-cta">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock content %}
 
 

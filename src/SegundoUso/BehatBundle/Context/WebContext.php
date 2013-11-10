@@ -6,6 +6,7 @@ use Behat\Behat\Context\Step\Given;
 use Behat\Behat\Context\Step\Then;
 use Behat\Behat\Context\Step\When;
 use Behat\Behat\Exception\PendingException;
+use Behat\CommonContexts\SymfonyMailerContext;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -23,6 +24,7 @@ class WebContext extends MinkContext implements KernelAwareInterface
     public function __construct()
     {
         $this->useContext('data', new DataContext());
+        $this->useContext('email', new SymfonyMailerContext());
     }
 
     /**

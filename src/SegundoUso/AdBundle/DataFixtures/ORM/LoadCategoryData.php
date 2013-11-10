@@ -28,8 +28,3 @@ class LoadCategoryData implements FixtureInterface
         $manager->flush();
     }
 }
-
-
-{
-
-}

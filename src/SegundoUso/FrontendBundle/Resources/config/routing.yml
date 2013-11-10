@@ -9,3 +9,11 @@ segundo_uso_frontend_ad_create:
 segundo_uso_frontend_ad_waiting_confirmation:
     pattern: /anuncio/por-confirmar
     defaults: { _controller: SegundoUsoAdBundle:Default:waitingConfirmation }
+
+segundo_uso_frontend_ad_confirmation:
+    pattern: /anuncio/confirmacion/{pid}
+    defaults: { _controller: SegundoUsoAdBundle:Default:confirmation }
+
+segundo_uso_frontend_ad_list:
+    pattern: /anuncios
+    defaults: { _controller: SegundoUsoAdBundle:Default:index }

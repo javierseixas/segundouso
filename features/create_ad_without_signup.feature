@@ -18,11 +18,9 @@ Feature: Create an ad without signing up
          When I click the new ad button
          Then I am on the new ad form page
          When I fill and send the form
-         Then I get on a confirmation page
-
-
-    Scenario: I receive an email to confirm my ad
-
+#        There is not possible run this test with sahi
+#         Then email with subject "Confirmación de anuncio en SegundoUso.org" should have been sent
+          And I get on a confirmation page
 
     Scenario: I confirm the ad successfully
         Given I am on the confirmation page

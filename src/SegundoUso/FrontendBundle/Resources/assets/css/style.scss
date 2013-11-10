@@ -17,6 +17,28 @@ html, body {
   content: "";
   display: block;
 }
+
+.home-search {
+
+  .title {
+    display: block;
+    padding-top: 20px;
+    font-size: 23px;
+  }
+
+  .categories {
+    font-size: 27px;
+    height: 63px;
+    padding: 11px;
+    width: 100%;
+
+    option {
+      line-height: 1.33;
+      font-size: 27px;
+    }
+  }
+}
+
 footer, .page-wrap:after {
   /* .push must be the same height as footer */
   height: 170px;

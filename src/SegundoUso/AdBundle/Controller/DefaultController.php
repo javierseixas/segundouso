@@ -11,6 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    public function indexAction(Request $request)
+    {
+        /** @var $categoryManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $ads = $adManager->findAllPublished();
+
+        return $this->render('SegundoUsoAdBundle:Default:index.html.twig', array(
+            'ads' => $ads,
+        ));
+    }
+
+
     public function createAction(Request $request)
     {
         /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
@@ -44,5 +57,19 @@ class DefaultController extends Controller
     public function waitingConfirmationAction()
     {
         return $this->render('SegundoUsoAdBundle:Default:waiting_confirmation.html.twig');
+    }
+
+    public function confirmationAction($pid)
+    {
+        /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        if (null === $ad = $adManager->findByPid($pid)) {
+            return $this->render('SegundoUsoAdBundle:Default:confirmation_failed.html.twg');
+        }
+
+        $adManager->publishAd($ad);
+
+        return $this->render('SegundoUsoAdBundle:Default:confirmation.html.twig', array('ad' => $ad));
     }
 }

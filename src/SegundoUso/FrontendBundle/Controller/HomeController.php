@@ -8,6 +8,13 @@ class HomeController extends Controller
 {
     public function homeAction()
     {
-        return $this->render('SegundoUsoFrontendBundle:Home:home.html.twig', array());
+        /** @var $categoryManager \SegundoUso\AdBundle\Model\CategoryManager */
+        $categoryManager = $this->get('seguso.category_manager');
+
+        $categories = $categoryManager->findAll();
+
+        return $this->render('SegundoUsoFrontendBundle:Home:home.html.twig', array(
+            'categories' => $categories,
+        ));
     }
 }

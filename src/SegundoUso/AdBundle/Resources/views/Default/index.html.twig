@@ -1,0 +1,16 @@
+{% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+
+        {% for ad in ads %}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8">{{ ad.title }}</div>
+                <div class="col-md-2 col-md-pull-2"><button class="btn">Contactar</button></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

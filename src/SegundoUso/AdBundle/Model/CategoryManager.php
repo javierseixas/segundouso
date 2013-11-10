@@ -46,4 +46,9 @@ class CategoryManager implements CategoryManagerInterface
         }
     }
 
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
+
 }
