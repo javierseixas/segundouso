@@ -2,11 +2,12 @@
 
 namespace SegundoUso\AdBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use SegundoUso\AdBundle\Entity\Category;
 
-class LoadCategoryData implements FixtureInterface
+class LoadCategoryData extends AbstractFixture implements FixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -16,6 +17,8 @@ class LoadCategoryData implements FixtureInterface
         $category = new Category();
         $category->setName('Muebles');
         $manager->persist($category);
+
+        $this->addReference('category_muebles', $category);
 
         $category = new Category();
         $category->setName('Electrodomésticos');
