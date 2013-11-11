@@ -13,4 +13,6 @@ interface AdManagerInterface
     public function findByPid($pid);
 
     public function findAllPublished();
+
+    public function findByCategoryAndPublished(CategoryInterface $category);
 }

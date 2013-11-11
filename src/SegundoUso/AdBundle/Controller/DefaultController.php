@@ -17,22 +17,61 @@ class DefaultController extends Controller
         /** @var $categoryManager \SegundoUso\AdBundle\Model\AdManager */
         $adManager = $this->get('seguso.ad_manager');
 
-        $ads = $adManager->findAllPublished();
+        $category = null;
+
+        if (null !== $categoryId = $request->get('categoryId')) {
+            $category = $this->getDoctrine()->getRepository('SegundoUsoAdBundle:Category')->find($categoryId);
+            $ads = $adManager->findByCategoryAndPublished($category);
+        } else {
+            $ads = $adManager->findAllPublished();
+        }
 
         return $this->render('SegundoUsoAdBundle:Default:index.html.twig', array(
             'ads' => $ads,
+            'category' => $category
         ));
     }
 
-    public function showAction($pid)
+    public function showAction(Request $request, $pid)
     {
         /** @var $categoryManager \SegundoUso\AdBundle\Model\AdManager */
         $adManager = $this->get('seguso.ad_manager');
+        $ad = $adManager->findByPid($pid);
 
         $form = $this->createForm(new ContactAdvertiserType());
 
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Interés en tu anuncio en SegundoUso.org')
+                ->setFrom('dev@segundouso.org')
+                ->setTo($data['email'])
+                ->setBody(
+                    $this->render(
+                        'SegundoUsoAdBundle:Email:contact_email.html.twig',
+                        array(
+                            'data' => $data,
+                            'ad' => $ad
+                        )
+                    )
+                )
+                ->setContentType('text/html')
+            ;
+            $this->get('mailer')->send($message);
+
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Se ha enviado un email al anunciante. Él se pondrá en contacto contigo.'
+            );
+
+            return $this->redirect($this->generateUrl('segundo_uso_frontend_ad_show', array('pid' => $pid)));
+        }
+
         return $this->render('SegundoUsoAdBundle:Default:show.html.twig', array(
-            'ad' => $adManager->findByPid($pid),
+            'ad' => $ad,
             'contactForm' => $form->createView()
         ));
     }

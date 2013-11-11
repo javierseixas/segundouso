@@ -3,11 +3,12 @@
 namespace SegundoUso\AdBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SegundoUso\AdBundle\Model\CategoryInterface;
 
 /**
  * Category
  */
-class Category
+class Category implements CategoryInterface
 {
     /**
      * @var integer

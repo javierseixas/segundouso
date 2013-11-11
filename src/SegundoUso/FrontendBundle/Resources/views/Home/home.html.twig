@@ -17,7 +17,7 @@
                             <span class="title">Quizá alguien esté ofreciendo algo que tú necesitas</span>
                         </div>
                         <div class="col-md-4">
-                            <span><select class="categories">
+                            <span><select class="categories" name="categoryId">
                                 <option value="">Elige una categoría</option>
                                 {% for category in categories %}
                                     <option class="form-control" value="{{ category.id }}">{{ category.name }}</option>

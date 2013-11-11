@@ -71,4 +71,12 @@ class AdManager implements AdManagerInterface
     {
         return $this->repository->findBy(array('published' => true));
     }
+
+    public function findByCategoryAndPublished(CategoryInterface $category)
+    {
+        return $this->repository->findBy(array(
+            'published' => true,
+            'category' => $category
+        ));
+    }
 }
