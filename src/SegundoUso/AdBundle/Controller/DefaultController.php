@@ -6,6 +6,7 @@ use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
 use SegundoUso\AdBundle\Form\Type\AdType;
 use SegundoUso\AdBundle\SegundoUsoAdEvents;
+use SegundoUso\FrontendBundle\Form\Type\ContactAdvertiserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,19 @@ class DefaultController extends Controller
 
         return $this->render('SegundoUsoAdBundle:Default:index.html.twig', array(
             'ads' => $ads,
+        ));
+    }
+
+    public function showAction($pid)
+    {
+        /** @var $categoryManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $form = $this->createForm(new ContactAdvertiserType());
+
+        return $this->render('SegundoUsoAdBundle:Default:show.html.twig', array(
+            'ad' => $adManager->findByPid($pid),
+            'contactForm' => $form->createView()
         ));
     }
 

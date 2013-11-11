@@ -77,3 +77,18 @@ footer {
     padding: 6px 0;
   }
 }
+
+.list {
+  .ad {
+    background-color: #dfdfdf;
+    margin: 10px 0;
+
+    .date {
+      font-size: 10px;
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+}

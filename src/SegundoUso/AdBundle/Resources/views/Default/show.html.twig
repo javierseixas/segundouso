@@ -1,0 +1,41 @@
+{% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row list">
+
+        <div class="col-md-8">
+            <h1>{{ ad.title }} en ({{ ad.location }})</h1>
+            <p>{{ ad.description }}</p>
+        </div>
+
+        <div class="col-md-4">
+            <form action="" method="post">
+                {{ form_start(contactForm) }}
+                {{ form_errors(contactForm) }}
+
+                <div>
+                    {{ form_label(contactForm.name) }}
+                    {{ form_errors(contactForm.name) }}
+                    {{ form_widget(contactForm.name) }}
+                </div>
+
+                <div>
+                    {{ form_label(contactForm.email) }}
+                    {{ form_errors(contactForm.email) }}
+                    {{ form_widget(contactForm.email) }}
+                </div>
+
+                <div>
+                    {{ form_label(contactForm.message) }}
+                    {{ form_errors(contactForm.message) }}
+                    {{ form_widget(contactForm.message) }}
+                </div>
+
+                {{ form_end(contactForm) }}
+                <button class="btn btn-success">Enviar</button>
+            </form>
+        </div>
+
+    </div>
+
+{% endblock content %}
