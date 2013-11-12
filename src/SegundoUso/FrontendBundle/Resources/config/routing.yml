@@ -21,3 +21,19 @@ segundo_uso_frontend_ad_list:
 segundo_uso_frontend_ad_show:
     pattern: /anuncios/{pid}
     defaults: { _controller: SegundoUsoAdBundle:Default:show }
+
+segundo_uso_frontend_manifiesto:
+    pattern: /manifiesto
+    defaults: { _controller: SegundoUsoFrontendBundle:Corporate:manifiesto }
+
+segundo_uso_frontend_about:
+    pattern: /sobre-segundo-uso
+    defaults: { _controller: SegundoUsoFrontendBundle:Corporate:about }
+
+segundo_uso_frontend_contact:
+    pattern: /contacto
+    defaults: { _controller: SegundoUsoFrontendBundle:Corporate:contact }
+
+segundo_uso_frontend_collaborate:
+    pattern: /colaborar
+    defaults: { _controller: SegundoUsoFrontendBundle:Corporate:colaborate }
