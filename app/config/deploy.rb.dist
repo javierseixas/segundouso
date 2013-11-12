@@ -1,0 +1,42 @@
+set :application, "SegundoUso"
+set :deploy_to,   "" # fill
+set :app_path,    "app"
+
+set :repository,  "git@github.com:javierseixas/segundouso.git"
+set :scm,         :git
+
+set :serverName, "" # fill
+set :domain,     "" # fill
+set :user,       "" # fill
+set :branch, fetch(:branch, "master")
+ssh_options[:port] = 22 #change this post to servergrove
+
+set   :deploy_via,    :copy
+
+set :model_manager, "doctrine"
+
+role :web,        domain
+role :app,        domain
+role :db,         domain, :primary => true
+
+set  :keep_releases,  3
+set  :use_sudo,       false
+
+set :use_composer, true
+set :update_vendors, true
+set :cache_warmup, true
+
+set :shared_files,    ["app/config/parameters.yml"]
+set :shared_children, [app_path + "/logs", web_path + "/uploads",  web_path + "/media", "vendor"]
+
+task :upload_parameters do
+  origin_file = "app/config/parameters.yml"
+  destination_file = shared_path + "/app/config/parameters.yml" # Notice the
+  shared_path
+
+  try_sudo "mkdir -p #{File.dirname(destination_file)}"
+  top.upload(origin_file, destination_file)
+end
+
+after "deploy:setup", "upload_parameters"
+
