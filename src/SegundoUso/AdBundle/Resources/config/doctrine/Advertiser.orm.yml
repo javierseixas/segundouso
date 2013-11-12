@@ -1,0 +1,38 @@
+SegundoUso\AdBundle\Entity\Advertiser:
+    type: entity
+    table: advertisers
+#    repositoryClass: SegundoUso\AdBundle\Repository\AdRepository
+    uniqueConstraints:
+        IDX_MAN_ADVERTISER_EMAIL:
+          columns: [ email ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        email:
+            type: string
+            lenght: 100
+        validated:
+            type: boolean
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                  on: create
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable:
+                  on: update
+    oneToMany:
+        ads:
+            targetEntity: Ad
+            mappedBy: advertiser
+            cascade: ["all"]
+    lifecycleCallbacks: { }

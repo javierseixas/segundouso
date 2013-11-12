@@ -1,0 +1,7 @@
+parameters:
+#    segundo_uso_core.example.class: SegundoUso\CoreBundle\Example
+
+services:
+#    segundo_uso_core.example:
+#        class: %segundo_uso_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

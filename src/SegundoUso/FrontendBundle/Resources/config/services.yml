@@ -1,0 +1,7 @@
+parameters:
+#    segundo_uso_frontend.example.class: SegundoUso\FrontendBundle\Example
+
+services:
+#    segundo_uso_frontend.example:
+#        class: %segundo_uso_frontend.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
