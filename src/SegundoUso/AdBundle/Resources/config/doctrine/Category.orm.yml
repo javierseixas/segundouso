@@ -1,0 +1,39 @@
+SegundoUso\AdBundle\Entity\Category:
+    type: entity
+    table: categories
+#    repositoryClass: SegundoUso\AdBundle\Repository\CategoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                  on: create
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable:
+                  on: update
+    oneToMany:
+        children:
+            targetEntity: Category
+            mappedBy: parent
+        ads:
+            targetEntity: Ad
+            mappedBy: category
+            cascade: ["all"]
+    manyToOne:
+        parent:
+            targetEntity: Category
+            inversedBy: children
+    lifecycleCallbacks: { }

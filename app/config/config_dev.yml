@@ -26,6 +26,10 @@ monolog:
 
 assetic:
     use_controller: true
+    ruby: /home/javierseixas/.rvm/bin/ruby
+    filters:
+        compass:
+            bin: /home/javierseixas/.rvm/gems/ruby-2.0.0-p247/bin/compass
 
 #swiftmailer:
 #    delivery_address: me@example.com

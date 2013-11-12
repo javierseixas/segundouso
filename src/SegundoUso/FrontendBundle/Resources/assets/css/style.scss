@@ -1,0 +1,99 @@
+@import "fonts";
+@import "vars";
+
+header {
+  padding: 10px 0;
+}
+
+html, body {
+  height: 100%;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -170px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
+.home-search {
+
+  .title {
+    display: block;
+    padding-top: 20px;
+    font-size: 23px;
+  }
+
+  .categories {
+    font-size: 27px;
+    height: 63px;
+    padding: 11px;
+    width: 100%;
+
+    option {
+      line-height: 1.33;
+      font-size: 27px;
+    }
+  }
+}
+
+footer, .page-wrap:after {
+  /* .push must be the same height as footer */
+  height: 170px;
+}
+
+.claim-cta {
+  font-size: 30px;
+}
+
+footer {
+  font-family: $text-font;
+  color: #222222;
+  h4 {
+    color: $primary-brown;
+    font-family: $text-font;
+    font-size: 14px;
+  }
+  a {
+    color: $primary-green;
+  }
+  a:hover {
+    color: $primary-green;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      font-size: 13px;
+      margin: 3px 0;
+    }
+  }
+
+  .copyright {
+    font-size: 12px;
+    color: #777;
+    padding: 6px 0;
+  }
+}
+
+.list {
+  .ad {
+    background-color: #dfdfdf;
+    margin: 10px 0;
+
+    .date {
+      font-size: 10px;
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+}
+
+.contact-form {
+  background-color: #dfdfdf;
+  padding: 15px;
+}

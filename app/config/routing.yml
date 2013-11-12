@@ -1,0 +1,8 @@
+segundo_uso_announcement:
+    resource: "@SegundoUsoAdBundle/Resources/config/routing.yml"
+    prefix:   /
+
+segundo_uso_frontend:
+    resource: "@SegundoUsoFrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+

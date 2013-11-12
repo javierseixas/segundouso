@@ -1,0 +1,48 @@
+{% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row list">
+
+        <div class="col-md-8">
+            <h1>{{ ad.title }} en ({{ ad.location }})</h1>
+            <p>{{ ad.description }}</p>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Contacta al anunciante</h3>
+            <div class="contact-form">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {{ form_start(contactForm, {'action': path('segundo_uso_frontend_ad_show', {pid:ad.pid}), 'attr': {'novalidate': 'novalidate', 'role':'form'}}) }}
+                {{ form_errors(contactForm) }}
+
+                <div class="form-group">
+                    {{ form_label(contactForm.name) }}
+                    {{ form_errors(contactForm.name) }}
+                    {{ form_widget(contactForm.name, { 'attr':{'class':'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(contactForm.email) }}
+                    {{ form_errors(contactForm.email) }}
+                    {{ form_widget(contactForm.email, { 'attr':{'class':'form-control'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(contactForm.message) }}
+                    {{ form_errors(contactForm.message) }}
+                    {{ form_widget(contactForm.message, { 'attr':{'class':'form-control'}}) }}
+                </div>
+
+                <button type="submit" class="btn btn-success">Enviar</button>
+
+                {{ form_end(contactForm) }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

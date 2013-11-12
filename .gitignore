@@ -13,3 +13,4 @@
 /.idea
 /.rsync_cache
 /app/config/deploy.rb
+/behat.yml
