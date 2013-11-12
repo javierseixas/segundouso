@@ -28,6 +28,26 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface
         $category->setName('Menaje del hogar');
         $manager->persist($category);
 
+        $category = new Category();
+        $category->setName('Vehículos');
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName('Utillaje');
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName('Ropa');
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName('Para niños y bebés');
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName('Ocio');
+        $manager->persist($category);
+
         $manager->flush();
     }
 }
