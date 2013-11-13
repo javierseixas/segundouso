@@ -1,6 +1,110 @@
 
 
-/* line 4, assetic_compassXZDsIR.scss */
-#header {
+/* line 4, assetic_compassubL6Zm.scss */
+header {
   padding: 10px 0;
+}
+
+/* line 8, assetic_compassubL6Zm.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 11, assetic_compassubL6Zm.scss */
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -170px;
+}
+
+/* line 16, assetic_compassubL6Zm.scss */
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
+/* line 23, assetic_compassubL6Zm.scss */
+.home-search .title {
+  display: block;
+  padding-top: 20px;
+  font-size: 23px;
+}
+/* line 29, assetic_compassubL6Zm.scss */
+.home-search .categories {
+  font-size: 27px;
+  height: 63px;
+  padding: 11px;
+  width: 100%;
+}
+/* line 35, assetic_compassubL6Zm.scss */
+.home-search .categories option {
+  line-height: 1.33;
+  font-size: 27px;
+}
+
+/* line 42, assetic_compassubL6Zm.scss */
+footer, .page-wrap:after {
+  /* .push must be the same height as footer */
+  height: 170px;
+}
+
+/* line 47, assetic_compassubL6Zm.scss */
+.claim-cta {
+  font-size: 30px;
+}
+
+/* line 51, assetic_compassubL6Zm.scss */
+footer {
+  font-family: "Open Sans", sans-serif;
+  color: #222222;
+}
+/* line 54, assetic_compassubL6Zm.scss */
+footer h4 {
+  color: #3e1d00;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+/* line 59, assetic_compassubL6Zm.scss */
+footer a {
+  color: #13890a;
+}
+/* line 62, assetic_compassubL6Zm.scss */
+footer a:hover {
+  color: #13890a;
+}
+/* line 65, assetic_compassubL6Zm.scss */
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+/* line 68, assetic_compassubL6Zm.scss */
+footer ul li {
+  font-size: 13px;
+  margin: 3px 0;
+}
+/* line 74, assetic_compassubL6Zm.scss */
+footer .copyright {
+  font-size: 12px;
+  color: #777;
+  padding: 6px 0;
+}
+
+/* line 82, assetic_compassubL6Zm.scss */
+.list .ad {
+  background-color: #dfdfdf;
+  margin: 10px 0;
+}
+/* line 86, assetic_compassubL6Zm.scss */
+.list .ad .date {
+  font-size: 10px;
+}
+/* line 90, assetic_compassubL6Zm.scss */
+.list .ad h2 {
+  font-size: 16px;
+}
+
+/* line 96, assetic_compassubL6Zm.scss */
+.contact-form {
+  background-color: #dfdfdf;
+  padding: 15px;
 }
