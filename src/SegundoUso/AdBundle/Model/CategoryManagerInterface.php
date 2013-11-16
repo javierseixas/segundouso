@@ -10,4 +10,6 @@ interface CategoryManagerInterface
     public function updateCategory(CategoryInterface $category, $andFlush);
 
     public function findAll();
+
+    public function findByName($name);
 }

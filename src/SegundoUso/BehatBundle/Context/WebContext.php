@@ -71,7 +71,7 @@ class WebContext extends MinkContext implements KernelAwareInterface
             new When('I fill in "ad_location" with "Barcelona"'),
             new When('I fill in "ad_description" with "Es muy bonita"'),
             new When('I select "Muebles" from "ad_category"'),
-            new When('I fill in "ad_advertiser" with "javier.seixas@gmail.com"'),
+            new When('I fill in "ad_advertiser" with "dev@segundouso.org"'),
             new When('I press "FLAG_send-new-ad-form"'),
         );
     }
@@ -107,6 +107,59 @@ class WebContext extends MinkContext implements KernelAwareInterface
     {
         throw new PendingException();
     }
+
+    /**
+     * @Given /^I select the category "([^"]*)"$/
+     */
+    public function iSelectTheCategory($category)
+    {
+        return array(
+            new When('I select "'.$category.'" from "categoryId"'),
+            new When('I press "FLAG_search-ads"'),
+        );
+    }
+
+    /**
+     * @Then /^I am on the list page$/
+     */
+    public function iAmOnTheListPage()
+    {
+        return new Then('I should see an "#FLAG_ads-list" element');
+    }
+
+    /**
+     * For example: I should see 10 ads.
+     *
+     * @Then /^I should see there (\d+) ads/
+     */
+    public function iShouldSeeThatMuchAds($amount)
+    {
+        $this->assertSession()->elementsCount('css', '.ad', $amount);
+    }
+
+    /**
+     * @Given /^I am on the ad details page for ad "([^"]*)"$/
+     */
+    public function iAmOnTheAdDetailsPageForAd($pid)
+    {
+        return new Given('I am on "/anuncios/' . $pid . '"');
+    }
+
+    /**
+     * @Given /^I fill the contact form with my data$/
+     */
+    public function iFillTheContactFormWithMyData()
+    {
+        return array(
+            new When('I fill in "contact_advertiser_form_name" with "Javier"'),
+            new When('I fill in "contact_advertiser_form_email" with "dev@segundouso.org"'),
+            new When('I fill in "contact_advertiser_form_message" with "Estoy interesado"'),
+            new When('I press "FLAG_send-ad-contact-form"'),
+        );
+    }
+
+
+
 
 
 
