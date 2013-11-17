@@ -55,6 +55,11 @@ class Ad implements AdInterface
     private $updatedAt;
 
     /**
+     * @var \DateTime
+     */
+    private $deletedAt;
+
+    /**
      * @var \SegundoUso\AdBundle\Entity\Category
      */
     private $category;

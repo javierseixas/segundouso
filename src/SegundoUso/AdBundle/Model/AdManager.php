@@ -88,4 +88,12 @@ class AdManager implements AdManagerInterface
             'category' => $category
         ));
     }
+
+    public function remove(AdInterface $ad, $andFlush = true)
+    {
+        $this->objectManager->remove($ad);
+        if ($andFlush) {
+            $this->objectManager->flush();
+        }
+    }
 }

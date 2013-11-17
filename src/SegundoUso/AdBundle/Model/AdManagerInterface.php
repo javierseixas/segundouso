@@ -15,4 +15,6 @@ interface AdManagerInterface
     public function findAllPublished();
 
     public function findByCategoryAndPublished(CategoryInterface $category);
+
+    public function remove(AdInterface $ad, $endFlush);
 }

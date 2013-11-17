@@ -199,6 +199,24 @@ class WebContext extends MinkContext implements KernelAwareInterface
         new Then('the "ad_title" field should contain "'.$value.'"');
     }
 
+    /**
+     * @Given /^I am on the ad delete page with:$/
+     */
+    public function iAmOnTheAdDeletePageWith(TableNode $table)
+    {
+        foreach ($table->getHash() as $data) {
+            return new Given('I am on "/anuncios/eliminar/' . $data['pid'] . '/' . $data['token'] . '"');
+        }
+    }
+
+    /**
+     * @When /^I confirm to delete the ad$/
+     */
+    public function iConfirmToDeleteTheAd()
+    {
+        return new When('I press "FLAG_delete-ad"');
+    }
+
 
 
 

@@ -2,6 +2,10 @@ SegundoUso\AdBundle\Entity\Ad:
     type: entity
     table: ads
 #    repositoryClass: SegundoUso\AdBundle\Repository\AdRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: true
     uniqueConstraints:
         IDX_MAN_ANNOUNCEMENT_PID:
           columns: [ pid ]
@@ -39,6 +43,10 @@ SegundoUso\AdBundle\Entity\Ad:
             gedmo:
                 timestampable:
                   on: update
+        deletedAt:
+            type: datetime
+            column: delete_at
+            nullable: true
     manyToOne:
         category:
             targetEntity: Category

@@ -5,6 +5,7 @@ namespace SegundoUso\AdBundle\Controller;
 use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
 use SegundoUso\AdBundle\Exception\InvalidTokenException;
+use SegundoUso\AdBundle\Form\Type\AdDeletionType;
 use SegundoUso\AdBundle\Form\Type\AdType;
 use SegundoUso\AdBundle\SegundoUsoAdEvents;
 use SegundoUso\FrontendBundle\Form\Type\ContactAdvertiserType;
@@ -137,6 +138,44 @@ class DefaultController extends Controller
             'form' => $form->createView(),
             'ad' => $ad
         ));
+    }
+
+    public function deleteAction(Request $request, $pid, $token)
+    {
+        /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $ad = $adManager->findByPid($pid);
+
+        if ($ad->getToken() !== $token) {
+            throw new InvalidTokenException("No es posible acceder a la edición del anuncio. Por favor, accede desde el link facilitado en el email.");
+        }
+
+        $form = $this->createForm(new AdDeletionType(), $ad);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $adManager->remove($ad);
+
+            $this->get('session')->getFlashBag()->add(
+                'alert-success',
+                'Tu anuncio se ha eliminado correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('segundo_uso_frontend_ad_delete_confirmation'));
+        }
+
+        return $this->render('SegundoUsoAdBundle:Default:delete.html.twig', array(
+            'form' => $form->createView(),
+            'ad' => $ad
+        ));
+    }
+
+    public function deleteConfirmationAction()
+    {
+        return $this->render('SegundoUsoAdBundle:Default:delete_confirmation.html.twig');
     }
 
     public function waitingConfirmationAction()

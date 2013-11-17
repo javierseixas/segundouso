@@ -4,7 +4,7 @@
 
 <p>A continuación tienes dos anuncios que puedes necesitar:<br/>
 <a href="{{ url('segundo_uso_frontend_ad_edit', {pid:ad.pid, token:ad.token}) }}">Editar anuncio</a>: En caso que necesites modificar algún dato.<br/>
-<a href="">Eliminar anuncio</a>: Cuando tu anuncio ya no sea necesario.</p>
+<a href="{{ url('segundo_uso_frontend_ad_delete', {pid:ad.pid, token:ad.token}) }}">Eliminar anuncio</a>: Cuando tu anuncio ya no sea necesario.</p>
 
 <p>Ten presente que estos enlaces sólo son accesibles desde este email. Por favor, consérvalo para poder gestionar tu anuncio.</p>
 

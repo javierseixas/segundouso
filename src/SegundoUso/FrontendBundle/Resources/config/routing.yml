@@ -10,6 +10,14 @@ segundo_uso_frontend_ad_edit:
     pattern: /anuncios/editar/{pid}/{token}
     defaults: { _controller: SegundoUsoAdBundle:Default:edit }
 
+segundo_uso_frontend_ad_delete:
+    pattern: /anuncios/eliminar/{pid}/{token}
+    defaults: { _controller: SegundoUsoAdBundle:Default:delete }
+
+segundo_uso_frontend_ad_delete_confirmation:
+    pattern: /anuncios/eliminar/confirmacion
+    defaults: { _controller: SegundoUsoAdBundle:Default:deleteConfirmation }
+
 segundo_uso_frontend_ad_waiting_confirmation:
     pattern: /anuncio/por-confirmar
     defaults: { _controller: SegundoUsoAdBundle:Default:waitingConfirmation }

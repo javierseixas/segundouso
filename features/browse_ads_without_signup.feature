@@ -26,3 +26,6 @@ Feature: Browse ads without signing up
     Scenario: I browse a category which doesn't have ads
          When I select the category "Menaje"
          Then I should see "No hay anuncios publicados"
+
+    # TODO this scenario
+    Scenario: I browse a category and I only see ads non deleted
