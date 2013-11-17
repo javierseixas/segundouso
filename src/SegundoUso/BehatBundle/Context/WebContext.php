@@ -158,7 +158,32 @@ class WebContext extends MinkContext implements KernelAwareInterface
         );
     }
 
+    /**
+     * @Given /^I am on the ad edit page "([^"]*)"$/
+     */
+    public function iAmOnTheEditPage($pid)
+    {
+        return new Given('I am on "/anuncios/editar/' . $pid . '"');
+    }
 
+    /**
+     * @When /^I change the title to "([^"]*)"$/
+     */
+    public function iChangeTheTitleTo($title)
+    {
+        return array(
+            new When('I fill in "ad_title" with "'.$title.'"'),
+            new When('I press "FLAG_send-edit-ad"'),
+        );
+    }
+
+    /**
+     * @Given /^the title field should contains "([^"]*)"$/
+     */
+    public function iTitleFieldShouldContain($value)
+    {
+        new Then('the "ad_title" field should contain "'.$value.'"');
+    }
 
 
 

@@ -107,6 +107,35 @@ class DefaultController extends Controller
         ));
     }
 
+    public function editAction(Request $request, $pid)
+    {
+        // TODO Verify that only owner access this page
+
+        /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $ad = $adManager->findByPid($pid);
+
+        $form = $this->createForm(new AdType(), $ad);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $adManager->updateAd($ad);
+
+            $this->get('session')->getFlashBag()->add(
+                'alert-success',
+                'Tu anuncio se ha editado correctamente.'
+            );
+        }
+
+        return $this->render('SegundoUsoAdBundle:Default:edit.html.twig', array(
+            'form' => $form->createView(),
+            'ad' => $ad
+        ));
+    }
+
     public function waitingConfirmationAction()
     {
         return $this->render('SegundoUsoAdBundle:Default:waiting_confirmation.html.twig');

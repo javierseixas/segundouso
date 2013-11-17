@@ -1,6 +1,6 @@
 parameters:
-    seguso.ad.util.pid_generator.class: SegundoUso\AdBundle\Util\PublicIdGenerator
+    seguso.ad.util.random_string_generator.class: SegundoUso\AdBundle\Util\RandomStringGenerator
 
 services:
-    seguso.ad.util.pid_generator:
-        class: %seguso.ad.util.pid_generator.class%
+    seguso.ad.util.random_string_generator:
+        class: %seguso.ad.util.random_string_generator.class%

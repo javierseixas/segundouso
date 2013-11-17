@@ -35,6 +35,11 @@ class Ad implements AdInterface
     private $pid;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * @var boolean
      */
     private $published;
@@ -161,6 +166,24 @@ class Ad implements AdInterface
     {
         return $this->pid;
     }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
 
     /**
      * Set published

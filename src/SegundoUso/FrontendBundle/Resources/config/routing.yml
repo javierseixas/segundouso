@@ -6,6 +6,10 @@ segundo_uso_frontend_ad_create:
     pattern: /anuncio/crear
     defaults: { _controller: SegundoUsoAdBundle:Default:create }
 
+segundo_uso_frontend_ad_edit:
+    pattern: /anuncios/editar/{pid}
+    defaults: { _controller: SegundoUsoAdBundle:Default:edit }
+
 segundo_uso_frontend_ad_waiting_confirmation:
     pattern: /anuncio/por-confirmar
     defaults: { _controller: SegundoUsoAdBundle:Default:waitingConfirmation }

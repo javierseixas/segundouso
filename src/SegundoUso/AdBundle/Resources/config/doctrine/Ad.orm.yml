@@ -20,6 +20,9 @@ SegundoUso\AdBundle\Entity\Ad:
         pid:
             type: string
             lenght: 64
+        token:
+            type: string
+            lenght: 16
         published:
             type: boolean
         createdAt:

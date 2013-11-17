@@ -75,14 +75,16 @@ class DataContext extends BehatContext implements KernelAwareInterface
     public function thereAreFollowingAds(TableNode $table)
     {
         foreach ($table->getHash() as $data) {
-            $this->thereIsAd($data['title'], $data['category'], $data['pid']);
+            $pid = isset($data['pid']) ? $data['pid'] : null;
+            $token = isset($data['token']) ? $data['pid'] : null;
+            $this->thereIsAd($data['title'], $data['category'], $pid, $token);
         }
     }
 
     /**
      * @Given /^I created an ad "([^""]*)"$/
      */
-    public function thereIsAd($title = null, $categoryName = null, $pid = null, $email = null, $published = true)
+    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $email = null, $published = true)
     {
         if (null === $categoryName) {
             throw new \Exception('You need to specify a category name existing in this scenario');
@@ -94,6 +96,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
             ->setDescription($this->faker->paragraph())
             ->setLocation('Barcelona')
             ->setPid((null !== $pid) ? $pid : $this->faker->uuid())
+            ->setToken((null !== $token) ? $token : $this->faker->uuid())
             ->setPublished($published)
         ;
 
