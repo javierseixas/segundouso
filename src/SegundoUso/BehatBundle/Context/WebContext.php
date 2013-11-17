@@ -7,6 +7,8 @@ use Behat\Behat\Context\Step\Then;
 use Behat\Behat\Context\Step\When;
 use Behat\Behat\Exception\PendingException;
 use Behat\CommonContexts\SymfonyMailerContext;
+use Behat\CommonContexts\WebApiContext;
+use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -21,10 +23,11 @@ class WebContext extends MinkContext implements KernelAwareInterface
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(array $parameters)
     {
         $this->useContext('data', new DataContext());
         $this->useContext('email', new SymfonyMailerContext());
+        $this->useContext('api', new WebApiContext($parameters['base_url'], null));
     }
 
     /**
@@ -165,6 +168,17 @@ class WebContext extends MinkContext implements KernelAwareInterface
     {
         return new Given('I am on "/anuncios/editar/' . $pid . '"');
     }
+
+    /**
+     * @Given /^I am on the ad edit page with:$/
+     */
+    public function iAmOnTheAdEditPageWith(TableNode $table)
+    {
+        foreach ($table->getHash() as $data) {
+            return new Given('I am on "/anuncios/editar/' . $data['pid'] . '/' . $data['token'] . '"');
+        }
+    }
+
 
     /**
      * @When /^I change the title to "([^"]*)"$/

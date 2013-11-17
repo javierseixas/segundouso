@@ -76,7 +76,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     {
         foreach ($table->getHash() as $data) {
             $pid = isset($data['pid']) ? $data['pid'] : null;
-            $token = isset($data['token']) ? $data['pid'] : null;
+            $token = isset($data['token']) ? $data['token'] : null;
             $this->thereIsAd($data['title'], $data['category'], $pid, $token);
         }
     }

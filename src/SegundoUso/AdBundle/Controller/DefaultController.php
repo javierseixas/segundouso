@@ -4,6 +4,7 @@ namespace SegundoUso\AdBundle\Controller;
 
 use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
+use SegundoUso\AdBundle\Exception\InvalidTokenException;
 use SegundoUso\AdBundle\Form\Type\AdType;
 use SegundoUso\AdBundle\SegundoUsoAdEvents;
 use SegundoUso\FrontendBundle\Form\Type\ContactAdvertiserType;
@@ -107,14 +108,16 @@ class DefaultController extends Controller
         ));
     }
 
-    public function editAction(Request $request, $pid)
+    public function editAction(Request $request, $pid, $token)
     {
-        // TODO Verify that only owner access this page
-
         /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
         $adManager = $this->get('seguso.ad_manager');
 
         $ad = $adManager->findByPid($pid);
+
+        if ($ad->getToken() !== $token) {
+            throw new InvalidTokenException("No es posible acceder a la edición del anuncio. Por favor, accede desde el link facilitado en el email.");
+        }
 
         $form = $this->createForm(new AdType(), $ad);
 
@@ -152,6 +155,27 @@ class DefaultController extends Controller
 
         $adManager->publishAd($ad);
 
+        $this->sendEmailManager($ad);
+
         return $this->render('SegundoUsoAdBundle:Default:confirmation.html.twig', array('ad' => $ad));
+    }
+
+    private function sendEmailManager($ad)
+    {
+        $advertiser = $ad->getAdvertiser();
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Anuncio publicado en SegundoUso.org')
+            ->setFrom('dev@segundouso.org')
+            ->setTo($advertiser->getEmail())
+            ->setBody(
+                $this->render(
+                    'SegundoUsoAdBundle:Email:ad_manager_email.html.twig',
+                    array('ad' => $ad)
+                )
+            )
+            ->setContentType('text/html')
+        ;
+        $this->get('mailer')->send($message);
     }
 }
