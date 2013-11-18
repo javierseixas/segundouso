@@ -69,6 +69,16 @@ class Ad implements AdInterface
      */
     private $advertiser;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $marks;
+
+
+    public function __construct()
+    {
+        $this->marks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -299,5 +309,60 @@ class Ad implements AdInterface
         return $this->advertiser;
     }
 
+    
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Ad
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    
+        return $this;
+    }
 
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Add marks
+     *
+     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     * @return Ad
+     */
+    public function addMark(Mark $marks)
+    {
+        $this->marks[] = $marks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove marks
+     *
+     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     */
+    public function removeMark(Mark $marks)
+    {
+        $this->marks->removeElement($marks);
+    }
+
+    /**
+     * Get marks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMarks()
+    {
+        return $this->marks;
+    }
 }

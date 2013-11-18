@@ -64,4 +64,8 @@ SegundoUso\AdBundle\Entity\Ad:
                 referenceColumnName: id
                 nullable: true
             cascade: ['persist']
+    oneToMany:
+        marks:
+            targetEntity: Mark
+            mappedBy: ads
     lifecycleCallbacks: { }

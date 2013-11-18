@@ -10,6 +10,8 @@ interface AdManagerInterface
 
     public function publishAd(AdInterface $ad);
 
+    public function find($id);
+
     public function findByPid($pid);
 
     public function findAllPublished();

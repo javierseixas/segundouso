@@ -9,6 +9,13 @@
         </div>
 
         <div class="col-md-4">
+
+            <div>
+                <button type="button" class="btn btn-default" id="fraudulent-marker" title="Marcar este anuncio como fraudulento">
+                    <span class="glyphicon glyphicon-flag"></span> Avisar
+                </button>
+            </div>
+
             <h3>Contacta al anunciante</h3>
             <div class="contact-form">
                 {% for flashMessage in app.session.flashbag.get('success') %}
@@ -46,3 +53,23 @@
     </div>
 
 {% endblock content %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $('#fraudulent-marker').click(function() {
+            $.ajax({
+                type: "POST",
+                url: '{{ path('segundo_uso_frontend_ad_mark_fraudulent', {id:ad.id}) }}',
+                data: 'hola',
+                success: function() {
+                    $('#fraudulent-marker').removeClass('btn-default').addClass('btn-warning').attr('disabled', 'disabled');
+                },
+                dataType: 'json'
+            });
+        });
+    </script>
+
+{% endblock javascripts %}

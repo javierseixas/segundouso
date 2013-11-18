@@ -61,6 +61,11 @@ class AdManager implements AdManagerInterface
         $this->updateAd($ad);
     }
 
+    public function find($id)
+    {
+        return $this->repository->find($id);
+    }
+
     public function findByPid($pid)
     {
         return $this->repository->findOneBy(array('pid' => $pid));

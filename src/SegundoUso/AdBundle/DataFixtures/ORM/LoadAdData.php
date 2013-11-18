@@ -21,6 +21,7 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setLocation('Barcelona')
             ->setPublished(true)
             ->setPid('1234')
+            ->setToken('1234')
             ->setCategory($this->getReference('category_muebles'));
         $manager->persist($ad);
 
@@ -31,6 +32,7 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setLocation('Mataró')
             ->setPublished(true)
             ->setPid('4321')
+            ->setToken('4321')
             ->setCategory($this->getReference('category_muebles'));
         $manager->persist($ad);
 
@@ -41,6 +43,7 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setLocation('Sabadell')
             ->setPublished(true)
             ->setPid('5678')
+            ->setToken('5678')
             ->setCategory($this->getReference('category_muebles'));
         $manager->persist($ad);
 

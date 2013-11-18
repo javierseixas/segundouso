@@ -1,0 +1,32 @@
+SegundoUso\AdBundle\Entity\Mark:
+    type: entity
+    table: marks
+#    repositoryClass: SegundoUso\AdBundle\Repository\CategoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                  on: create
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable:
+                  on: update
+    manyToOne:
+        ad:
+            targetEntity: Ad
+            inversedBy: marks
+            joinColumn:
+                name: ad_id
+                referencedColumnName: id
+    lifecycleCallbacks: { }
