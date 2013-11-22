@@ -10,9 +10,12 @@
 
         <div class="col-md-4">
 
-            <div>
-                <button type="button" class="btn btn-default" id="fraudulent-marker" title="Marcar este anuncio como fraudulento">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default id="fraudulent-marker" title="Marcar este anuncio como fraudulento">
                     <span class="glyphicon glyphicon-flag"></span> Avisar
+                </button>
+                <button type="button" class="favorite-marker btn btn-{% if isFavorite %}success unfavoritable{% else %}default{% endif %}" data-adid="{{ ad.id }}" data-favorite-url="{{ path('segundo_uso_frontend_ad_favorite', {id:ad.id}) }}" data-unfavorite-url="{{ path('segundo_uso_frontend_ad_unfavorite', {id:ad.id}) }}" title="Marcar anuncio como favorito">
+                    <span class="glyphicon glyphicon-heart"></span> <span class="favorite-text">Favorito</span>
                 </button>
             </div>
 
@@ -59,17 +62,20 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        $('#fraudulent-marker').click(function() {
-            $.ajax({
-                type: "POST",
-                url: '{{ path('segundo_uso_frontend_ad_mark_fraudulent', {id:ad.id}) }}',
-                data: 'hola',
-                success: function() {
-                    $('#fraudulent-marker').removeClass('btn-default').addClass('btn-warning').attr('disabled', 'disabled');
-                },
-                dataType: 'json'
+        $(document).ready(function() {
+            $('#fraudulent-marker').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: '{{ path('segundo_uso_frontend_ad_mark_fraudulent', {id:ad.id}) }}',
+                    data: 'hola',
+                    success: function() {
+                        $('#fraudulent-marker').removeClass('btn-default').addClass('btn-warning').attr('disabled', 'disabled');
+                    },
+                    dataType: 'json'
+                });
             });
         });
     </script>
+    <script type="text/javascript" src="{{ asset('bundles/segundousoad/js/favoritable.js') }}"></script>
 
 {% endblock javascripts %}

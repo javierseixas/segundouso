@@ -18,7 +18,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6"><a href="{{ path('segundo_uso_frontend_homepage') }}"><img src="{{ asset('bundles/segundousofrontend/img/logo-segundo-uso.png') }}"></a></div>
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{{ path('segundo_uso_frontend_favorites') }}">Favoritos</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>

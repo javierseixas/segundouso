@@ -40,6 +40,10 @@ class DefaultController extends Controller
         $adManager = $this->get('seguso.ad_manager');
         $ad = $adManager->findByPid($pid);
 
+        // TODO Refactor this (maybe putting it inside the Entity or creating a service for this)
+        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME));
+        $isFavorite = in_array($ad->getId(), $favoritesCookie);
+
         $form = $this->createForm(new ContactAdvertiserType());
 
         $form->handleRequest($request);
@@ -74,7 +78,8 @@ class DefaultController extends Controller
 
         return $this->render('SegundoUsoAdBundle:Default:show.html.twig', array(
             'ad' => $ad,
-            'contactForm' => $form->createView()
+            'contactForm' => $form->createView(),
+            'isFavorite' => $isFavorite
         ));
     }
 

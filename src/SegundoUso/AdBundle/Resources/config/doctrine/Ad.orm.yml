@@ -1,7 +1,7 @@
 SegundoUso\AdBundle\Entity\Ad:
     type: entity
     table: ads
-#    repositoryClass: SegundoUso\AdBundle\Repository\AdRepository
+    repositoryClass: SegundoUso\AdBundle\Entity\AdRepository
     gedmo:
         soft_deleteable:
             field_name: deletedAt

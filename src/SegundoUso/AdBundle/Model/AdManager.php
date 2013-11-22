@@ -94,6 +94,13 @@ class AdManager implements AdManagerInterface
         ));
     }
 
+    public function findFavoritesInCookie($favoritesIds)
+    {
+        if (null === $favoritesIds || empty($favoritesIds)) return array();
+
+        return $this->repository->findPublishedByIds($favoritesIds);
+    }
+
     public function remove(AdInterface $ad, $andFlush = true)
     {
         $this->objectManager->remove($ad);
