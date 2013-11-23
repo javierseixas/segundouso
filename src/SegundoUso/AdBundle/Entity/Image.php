@@ -184,13 +184,17 @@ class Image
     {
         $this->file = $file;
 
+        if ($this->file) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
         // check if we have an old image path
-        if (isset($this->path)) {
+        if (isset($this->fileName)) {
             // store the old name to delete after the update
-            $this->temp = $this->path;
-            $this->path = null;
+            $this->temp = $this->fileName;
+            $this->fileName = null;
         } else {
-            $this->path = 'initial';
+            $this->fileName = 'initial';
         }
     }
 

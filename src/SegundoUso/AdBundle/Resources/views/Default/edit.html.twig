@@ -42,6 +42,14 @@
                 {{ form_errors(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
             </div>
             <div class="form-group">
+                {{ form_label(form.images, 'Fotografías', {'label_attr': {'class':'col-md-2'}}) }}
+                <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}">
+                    {% for image in form.images %}
+                        <li><img src="{{ image.vars.value.getWebPath | imagine_filter('my_thumb') }}" /> {{ form_row(image.file) }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group">
                 <div class="col-md-offset-2"><button type="submit" id="FLAG_send-edit-ad" class="btn btn-primary">Modificar</button></div>
             </div>
             {{ form_end(form) }}
@@ -49,3 +57,9 @@
     </div>
 
 {% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('bundles/segundousoad/js/image_collection.js') }}"></script>
+{% endblock javascripts %}

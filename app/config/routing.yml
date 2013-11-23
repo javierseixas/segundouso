@@ -6,3 +6,6 @@ segundo_uso_frontend:
     resource: "@SegundoUsoFrontendBundle/Resources/config/routing.yml"
     prefix:   /
 
+_imagine:
+    resource: .
+    type:     imagine

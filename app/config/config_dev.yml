@@ -33,3 +33,8 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+services:
+    twig.extension.debug:
+        class: Twig_Extensions_Extension_Debug
+        tags:
+            - { name: twig.extension }
