@@ -1,0 +1,43 @@
+SegundoUso\AdBundle\Entity\Image:
+    type: entity
+    table: ad_images
+#    repositoryClass: SegundoUso\AdBundle\Repository\CategoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        fileName:
+            column: file_name
+            type: string
+            length: 100
+            nullable: false
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                  on: create
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+            gedmo:
+                timestampable:
+                  on: update
+    manyToOne:
+        ad:
+            targetEntity: Ad
+            inversedBy: images
+            joinColumn:
+                name: ad_id
+                referencedColumnName: id
+            cascade: ['persist']
+    lifecycleCallbacks:
+        prePersist: [preUpload]
+        preUpdate: [preUpload]
+        postPersist: [upload]
+        postUpdate: [upload]
+        postRemove: [removeUpload]

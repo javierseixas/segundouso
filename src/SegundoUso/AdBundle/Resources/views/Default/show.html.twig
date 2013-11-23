@@ -5,6 +5,26 @@
 
         <div class="col-md-8">
             <h1>{{ ad.title }} en ({{ ad.location }})</h1>
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    {% set firstActive = true %}{% for image in ad.images %}
+                    <div class="item {% if firstActive %}active{% endif %}{% set firstActive = false %}">
+                        <img src="{{ image.getWebPath }}">
+                        <div class="carousel-caption"> </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
             <p>{{ ad.description }}</p>
         </div>
 

@@ -67,5 +67,9 @@ SegundoUso\AdBundle\Entity\Ad:
     oneToMany:
         marks:
             targetEntity: Mark
-            mappedBy: ads
+            mappedBy: ad
+        images:
+            targetEntity: Image
+            mappedBy: ad
+            cascade: ['persist']
     lifecycleCallbacks: { }

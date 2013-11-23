@@ -26,6 +26,12 @@ class AdType extends AbstractType
                 'empty_value' => "Selecciona una categoría"
             ))
             ->add('advertiser', 'advertiser_email')
+            ->add('images', 'collection', array(
+                'type' => new AdImageType(),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ))
         ;
     }
 

@@ -2,6 +2,7 @@
 
 namespace SegundoUso\AdBundle\Controller;
 
+use SegundoUso\AdBundle\Entity\Image;
 use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
 use SegundoUso\AdBundle\Exception\InvalidTokenException;
@@ -41,7 +42,7 @@ class DefaultController extends Controller
         $ad = $adManager->findByPid($pid);
 
         // TODO Refactor this (maybe putting it inside the Entity or creating a service for this)
-        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME));
+        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME), true);
         $isFavorite = in_array($ad->getId(), $favoritesCookie);
 
         $form = $this->createForm(new ContactAdvertiserType());
@@ -93,6 +94,7 @@ class DefaultController extends Controller
 
         $ad = $adManager->createAd();
         $ad->setPublished(false);
+        $ad->addImage(new Image());
 
         $form = $this->createForm(new AdType(), $ad);
 

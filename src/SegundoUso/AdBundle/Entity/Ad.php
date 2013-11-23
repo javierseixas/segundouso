@@ -72,12 +72,18 @@ class Ad implements AdInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
+
     private $marks;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
 
 
     public function __construct()
     {
         $this->marks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -308,7 +314,6 @@ class Ad implements AdInterface
     {
         return $this->advertiser;
     }
-
     
     /**
      * Set deletedAt
@@ -364,5 +369,39 @@ class Ad implements AdInterface
     public function getMarks()
     {
         return $this->marks;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \SegundoUso\AdBundle\Entity\Image $image
+     * @return Ad
+     */
+    public function addImage(\SegundoUso\AdBundle\Entity\Image $image)
+    {
+        $image->setAd($this);
+        $this->images->add($image);
+    
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \SegundoUso\AdBundle\Entity\Image $image
+     */
+    public function removeImage(\SegundoUso\AdBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }
