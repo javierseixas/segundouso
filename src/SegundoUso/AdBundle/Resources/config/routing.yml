@@ -1,3 +1,11 @@
 segundo_uso_ad_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: SegundoUsoAdBundle:Default:index }
+
+segundo_uso_ad_admin_category:
+    resource: "@SegundoUsoAdBundle/Resources/config/routing/category.yml"
+    prefix:   /admin/category
+
+SegundoUsoAdBundle_admin_ad:
+    resource: "@SegundoUsoAdBundle/Resources/config/routing/ad.yml"
+    prefix:   /admin/ad

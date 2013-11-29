@@ -1,4 +1,4 @@
-Feature: Contact advertiser regarding an intersting ad
+Feature: Contact advertiser regarding an interesting ad
     In order contact advertiser
     As a visitor
     I need to be able to contact him
@@ -10,6 +10,7 @@ Feature: Contact advertiser regarding an intersting ad
           And there are the following ads:
             | title             | category    | pid  |
             | Mesa de billar    | Muebles     | 1234 |
+        # TODO Fix: this statement gives problems on sahi because of the use of cookies
           And I am on the ad details page for ad "1234"
 # TODO Fix the problem why it doesn't find any security token
 #          And I should not be logged in

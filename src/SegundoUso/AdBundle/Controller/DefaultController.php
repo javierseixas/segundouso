@@ -94,7 +94,6 @@ class DefaultController extends Controller
 
         $ad = $adManager->createAd();
         $ad->setPublished(false);
-        $ad->addImage(new Image());
 
         $form = $this->createForm(new AdType(), $ad);
 

@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+var $addTagLink = $('<a href="#" class="add_tag_link">Añadir imagen</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
 $(document).ready(function() {
@@ -50,7 +50,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">delete this tag</a>');
+    var $removeFormA = $('<a href="#">eliminar esta imagen</a>');
     $tagFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

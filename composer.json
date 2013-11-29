@@ -21,7 +21,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "stof/doctrine-extensions-bundle": "1.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "liip/imagine-bundle": "0.16.*"
+        "liip/imagine-bundle": "0.16.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "require-dev": {
         "behat/behat": "2.4.*@stable",

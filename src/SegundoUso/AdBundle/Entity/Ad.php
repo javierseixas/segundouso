@@ -404,4 +404,11 @@ class Ad implements AdInterface
     {
         return $this->images;
     }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+
 }
