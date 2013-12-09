@@ -64,6 +64,14 @@ SegundoUso\AdBundle\Entity\Ad:
                 referenceColumnName: id
                 nullable: true
             cascade: ['persist']
+        municipality:
+            targetEntity: SegundoUso\LocationBundle\Entity\Municipality
+            inversedBy: ads
+            joinColumn:
+                name: municipality_id
+                referencedColumnName: id
+                nullable: false
+            cascade: ['persist']
     oneToMany:
         marks:
             targetEntity: Mark

@@ -2,7 +2,9 @@
 
 namespace SegundoUso\AdBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use SegundoUso\AdBundle\Model\AdInterface;
+use SegundoUso\LocationBundle\Entity\Municipality;
 
 /**
  * Ad
@@ -60,30 +62,35 @@ class Ad implements AdInterface
     private $deletedAt;
 
     /**
-     * @var \SegundoUso\AdBundle\Entity\Category
+     * @var Category
      */
     private $category;
 
     /**
-     * @var \SegundoUso\AdBundle\Entity\Advertiser
+     * @var Advertiser
      */
     private $advertiser;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-
     private $marks;
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $images;
 
+    /**
+     * @var Municipality
+     */
+    private $municipality;
+
 
     public function __construct()
     {
-        $this->marks = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->marks = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -190,6 +197,7 @@ class Ad implements AdInterface
 
     /**
      * @param string $token
+     * @return $this
      */
     public function setToken($token)
     {
@@ -278,10 +286,10 @@ class Ad implements AdInterface
     /**
      * Set category
      *
-     * @param \SegundoUso\AdBundle\Entity\Category $category
+     * @param Category $category
      * @return Ad
      */
-    public function setCategory(\SegundoUso\AdBundle\Entity\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
     
@@ -291,7 +299,7 @@ class Ad implements AdInterface
     /**
      * Get category
      *
-     * @return \SegundoUso\AdBundle\Entity\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -299,7 +307,7 @@ class Ad implements AdInterface
     }
 
     /**
-     * @param \SegundoUso\AdBundle\Entity\Advertiser $advertiser
+     * @param Advertiser $advertiser
      */
     public function setAdvertiser($advertiser)
     {
@@ -308,7 +316,7 @@ class Ad implements AdInterface
     }
 
     /**
-     * @return \SegundoUso\AdBundle\Entity\Advertiser
+     * @return Advertiser
      */
     public function getAdvertiser()
     {
@@ -374,10 +382,10 @@ class Ad implements AdInterface
     /**
      * Add images
      *
-     * @param \SegundoUso\AdBundle\Entity\Image $image
+     * @param Image $image
      * @return Ad
      */
-    public function addImage(\SegundoUso\AdBundle\Entity\Image $image)
+    public function addImage(Image $image)
     {
         $image->setAd($this);
         $this->images->add($image);
@@ -388,9 +396,9 @@ class Ad implements AdInterface
     /**
      * Remove images
      *
-     * @param \SegundoUso\AdBundle\Entity\Image $image
+     * @param Image $image
      */
-    public function removeImage(\SegundoUso\AdBundle\Entity\Image $image)
+    public function removeImage(Image $image)
     {
         $this->images->removeElement($image);
     }
@@ -410,5 +418,26 @@ class Ad implements AdInterface
         return $this->getTitle();
     }
 
+    /**
+     * Set municipality
+     *
+     * @param Municipality $municipality
+     * @return Ad
+     */
+    public function setMunicipality(Municipality $municipality)
+    {
+        $this->municipality = $municipality;
+    
+        return $this;
+    }
 
+    /**
+     * Get municipality
+     *
+     * @return Municipality
+     */
+    public function getMunicipality()
+    {
+        return $this->municipality;
+    }
 }
