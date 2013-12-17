@@ -5,11 +5,12 @@ namespace SegundoUso\LocationBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use SegundoUso\AdBundle\Entity\Ad;
+use SegundoUso\LocationBundle\Model\MunicipalityInterface;
 
 /**
  * Municipality
  */
-class Municipality
+class Municipality implements MunicipalityInterface
 {
     /**
      * @var integer

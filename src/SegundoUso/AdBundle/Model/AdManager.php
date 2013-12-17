@@ -4,6 +4,7 @@ namespace SegundoUso\AdBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use SegundoUso\AdBundle\Util\RandomStringGeneratorInterface;
+use SegundoUso\LocationBundle\Model\MunicipalityInterface;
 
 class AdManager implements AdManagerInterface
 {
@@ -91,6 +92,23 @@ class AdManager implements AdManagerInterface
         return $this->repository->findBy(array(
             'published' => true,
             'category' => $category
+        ));
+    }
+
+    public function findByMunicipalityAndPublished(MunicipalityInterface $municipality)
+    {
+        return $this->repository->findBy(array(
+            'published' => true,
+            'municipality' => $municipality
+        ));
+    }
+
+    public function findByCategoryMunicipalityAndPublished(CategoryInterface $category, MunicipalityInterface $municipality)
+    {
+        return $this->repository->findBy(array(
+            'published' => true,
+            'category' => $category,
+            'municipality' => $municipality
         ));
     }
 

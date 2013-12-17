@@ -3,11 +3,11 @@
 namespace SegundoUso\AdBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use SegundoUso\AdBundle\Entity\Ad;
 
-class LoadAdData extends AbstractFixture implements FixtureInterface
+class LoadAdData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -22,7 +22,8 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setPublished(true)
             ->setPid('1234')
             ->setToken('1234')
-            ->setCategory($this->getReference('category_muebles'));
+            ->setCategory($this->getReference('category_muebles'))
+            ->setMunicipality($this->getReference('municipality_barcelona'));
         $manager->persist($ad);
 
         $ad = new Ad();
@@ -33,7 +34,8 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setPublished(true)
             ->setPid('4321')
             ->setToken('4321')
-            ->setCategory($this->getReference('category_muebles'));
+            ->setCategory($this->getReference('category_muebles'))
+            ->setMunicipality($this->getReference('municipality_barcelona'));
         $manager->persist($ad);
 
         $ad = new Ad();
@@ -44,9 +46,15 @@ class LoadAdData extends AbstractFixture implements FixtureInterface
             ->setPublished(true)
             ->setPid('5678')
             ->setToken('5678')
-            ->setCategory($this->getReference('category_muebles'));
+            ->setCategory($this->getReference('category_muebles'))
+            ->setMunicipality($this->getReference('municipality_barcelona'));
         $manager->persist($ad);
 
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 5;
     }
 }

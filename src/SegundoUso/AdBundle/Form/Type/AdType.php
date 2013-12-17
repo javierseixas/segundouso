@@ -14,6 +14,11 @@ class AdType extends AbstractType
             ->add('title', 'text', array(
                 'label' => 'Título'
             ))
+            ->add('municipality', 'entity', array(
+                'class' => 'SegundoUso\LocationBundle\Entity\Municipality',
+                'label' => 'Ciudad',
+                'empty_value' => "Selecciona una ciudad"
+            ))
             ->add('location', 'text', array(
                 'label' => 'Localización'
             ))

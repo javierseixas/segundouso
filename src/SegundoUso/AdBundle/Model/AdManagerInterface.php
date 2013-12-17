@@ -2,6 +2,8 @@
 
 namespace SegundoUso\AdBundle\Model;
 
+use SegundoUso\LocationBundle\Model\MunicipalityInterface;
+
 interface AdManagerInterface
 {
     public function createAd();
@@ -17,6 +19,8 @@ interface AdManagerInterface
     public function findAllPublished();
 
     public function findByCategoryAndPublished(CategoryInterface $category);
+
+    public function findByCategoryMunicipalityAndPublished(CategoryInterface $category, MunicipalityInterface $municipality);
 
     public function remove(AdInterface $ad, $endFlush);
 }

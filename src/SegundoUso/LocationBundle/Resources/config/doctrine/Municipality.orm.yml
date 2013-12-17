@@ -18,6 +18,7 @@ SegundoUso\LocationBundle\Entity\Municipality:
         slug:
             type: string
             length: 100
+            nullable: true
             gedmo:
                 slug:
                     fields:

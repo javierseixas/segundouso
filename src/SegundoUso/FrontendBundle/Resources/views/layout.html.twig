@@ -2,6 +2,12 @@
 
 {% block stylesheets %}
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,600' rel='stylesheet' type='text/css'>
+
+    {% stylesheets filter='cssrewrite' output='css/third_parties.css'
+    "bundles/segundousofrontend/vendor/chosen/chosen.min.css"
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" media="screen" />
+    {% endstylesheets %}
     {% stylesheets filter='compass,cssrewrite' output='css/styles.css'
     "@SegundoUsoFrontendBundle/Resources/assets/css/fonts.scss"
     "@SegundoUsoFrontendBundle/Resources/assets/css/vars.scss"
@@ -18,7 +24,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6"><a href="{{ path('segundo_uso_frontend_homepage') }}"><img src="{{ asset('bundles/segundousofrontend/img/logo-segundo-uso.png') }}"></a></div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
+                        <form action="{{ path('segundo_uso_location_change_municipality') }}" method="post" id="city-selector" class="form-inline" role="form">
+                            <div class="form-group">
+                                <label class="" for="cities">Ciudad</label>
+                                <select data-placeholder="Elige ciudad" name="municipality" class="form-control chosen-select">
+                                    {{ render(controller('SegundoUsoLocationBundle:Default:listMunicipalities')) }}
+                                </select>
+                                <input type="hidden" name="currentRoute" value="{{ app.request.requesturi }}">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{ path('segundo_uso_frontend_ad_create') }}">Anunciar gratis</a></li>
                             <li><a href="{{ path('segundo_uso_frontend_favorites') }}">Favoritos</a></li>
@@ -57,3 +74,17 @@
     </footer>
 
 {% endblock body %}
+
+{% block javascripts %}
+    {% javascripts 'bundles/segundousofrontend/vendor/chosen/chosen.jquery.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $(".chosen-select").chosen({disable_search_threshold: 10}).change(function(evt, params) {
+                console.log('pepe');
+                $('#city-selector').submit();
+            });
+        });
+    </script>
+{% endblock %}

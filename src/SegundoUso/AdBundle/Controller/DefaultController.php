@@ -2,7 +2,6 @@
 
 namespace SegundoUso\AdBundle\Controller;
 
-use SegundoUso\AdBundle\Entity\Image;
 use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
 use SegundoUso\AdBundle\Exception\InvalidTokenException;
@@ -22,11 +21,13 @@ class DefaultController extends Controller
 
         $category = null;
 
+        $municipality = $this->getDoctrine()->getRepository('SegundoUsoLocationBundle:Municipality')->find($request->getSession()->get('currentMunicipality'));
+
         if (null !== $categoryId = $request->get('categoryId')) {
             $category = $this->getDoctrine()->getRepository('SegundoUsoAdBundle:Category')->find($categoryId);
-            $ads = $adManager->findByCategoryAndPublished($category);
+            $ads = $adManager->findByCategoryMunicipalityAndPublished($category, $municipality);
         } else {
-            $ads = $adManager->findAllPublished();
+            $ads = $adManager->findByMunicipalityAndPublished($municipality);
         }
 
         return $this->render('SegundoUsoAdBundle:Default:index.html.twig', array(
