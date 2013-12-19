@@ -12,7 +12,7 @@ segundo_uso_frontend:
 
 segundo_uso_user:
     resource: "@SegundoUsoUserBundle/Resources/config/routing.yml"
-    prefix:   /admin
+    prefix:   /
 
 _imagine:
     resource: .

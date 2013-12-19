@@ -11,17 +11,30 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
-        admin:
-            pattern: ^/admin
+        main:
+            pattern: ^/
             form_login:
-                check_path: /admin/login_check
-                login_path: /admin/login
-                provider: fos_userbundle
+                provider:      fos_userbundle
                 csrf_provider: form.csrf_provider
             logout:
                 path:   fos_user_security_logout
                 target: fos_user_security_login
+            context:         application
             anonymous:    true
+
+        admin:
+            pattern: ^/admin
+            form_login:
+                check_path: admin_login_check
+                login_path: admin_login
+                provider: fos_userbundle
+                default_target_path: admin_ad_new
+#                csrf_provider: form.csrf_provider
+            logout:
+                path:   fos_user_security_logout
+                target: fos_user_security_login
+            anonymous:    true
+            context:      application
 
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
