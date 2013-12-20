@@ -1,0 +1,30 @@
+admin_category:
+    pattern:  /
+    defaults: { _controller: "SegundoUsoAdBundle:Category:index" }
+
+admin_category_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SegundoUsoAdBundle:Category:show" }
+
+admin_category_new:
+    pattern:  /new
+    defaults: { _controller: "SegundoUsoAdBundle:Category:new" }
+
+admin_category_create:
+    pattern:  /create
+    defaults: { _controller: "SegundoUsoAdBundle:Category:create" }
+    requirements: { _method: post }
+
+admin_category_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SegundoUsoAdBundle:Category:edit" }
+
+admin_category_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SegundoUsoAdBundle:Category:update" }
+    requirements: { _method: post|put }
+
+admin_category_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SegundoUsoAdBundle:Category:delete" }
+    requirements: { _method: post|delete }

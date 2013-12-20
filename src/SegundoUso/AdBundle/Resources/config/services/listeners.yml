@@ -1,9 +1,14 @@
 parameters:
     seguso.listener.ad_conf_email.class: SegundoUso\AdBundle\EventListener\AdConfirmationEmailListener
-
+    seguso.listener.exception.class: SegundoUso\AdBundle\EventListener\ExceptionListener
 services:
     seguso.listener.ad_conf_email:
         class: %seguso.listener.ad_conf_email.class%
         arguments: [@mailer, @twig]
         tags:
             - { name: kernel.event_listener, event: seguso.ad_create.completed, method: onNewAdCreated }
+
+    seguso.listener.exception:
+        class: %seguso.listener.exception.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 10 }

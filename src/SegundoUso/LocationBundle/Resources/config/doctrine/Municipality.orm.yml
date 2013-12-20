@@ -1,0 +1,33 @@
+SegundoUso\LocationBundle\Entity\Municipality:
+    type: entity
+    table: municipalities
+#    repositoryClass: SegundoUso\AdBundle\Entity\AdRepository
+
+#    uniqueConstraints:
+#        IDX_MAN_ANNOUNCEMENT_PID:
+#          columns: [ pid ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 100
+        slug:
+            type: string
+            length: 100
+            nullable: true
+            gedmo:
+                slug:
+                    fields:
+                        - name
+    indexes:
+        search_idx:
+            columns: slug
+    oneToMany:
+        ads:
+            targetEntity: SegundoUso\AdBundle\Entity\Ad
+            mappedBy: city
+    lifecycleCallbacks: { }

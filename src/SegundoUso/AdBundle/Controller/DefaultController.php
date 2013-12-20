@@ -4,6 +4,8 @@ namespace SegundoUso\AdBundle\Controller;
 
 use SegundoUso\AdBundle\Event\AdEvent;
 use SegundoUso\AdBundle\Event\FormEvent;
+use SegundoUso\AdBundle\Exception\InvalidTokenException;
+use SegundoUso\AdBundle\Form\Type\AdDeletionType;
 use SegundoUso\AdBundle\Form\Type\AdType;
 use SegundoUso\AdBundle\SegundoUsoAdEvents;
 use SegundoUso\FrontendBundle\Form\Type\ContactAdvertiserType;
@@ -19,11 +21,13 @@ class DefaultController extends Controller
 
         $category = null;
 
+        $municipality = $this->getDoctrine()->getRepository('SegundoUsoLocationBundle:Municipality')->find($request->getSession()->get('currentMunicipality'));
+
         if (null !== $categoryId = $request->get('categoryId')) {
             $category = $this->getDoctrine()->getRepository('SegundoUsoAdBundle:Category')->find($categoryId);
-            $ads = $adManager->findByCategoryAndPublished($category);
+            $ads = $adManager->findByCategoryMunicipalityAndPublished($category, $municipality);
         } else {
-            $ads = $adManager->findAllPublished();
+            $ads = $adManager->findByMunicipalityAndPublished($municipality);
         }
 
         return $this->render('SegundoUsoAdBundle:Default:index.html.twig', array(
@@ -37,6 +41,10 @@ class DefaultController extends Controller
         /** @var $categoryManager \SegundoUso\AdBundle\Model\AdManager */
         $adManager = $this->get('seguso.ad_manager');
         $ad = $adManager->findByPid($pid);
+
+        // TODO Refactor this (maybe putting it inside the Entity or creating a service for this)
+        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME), true);
+        $isFavorite = in_array($ad->getId(), $favoritesCookie);
 
         $form = $this->createForm(new ContactAdvertiserType());
 
@@ -72,7 +80,8 @@ class DefaultController extends Controller
 
         return $this->render('SegundoUsoAdBundle:Default:show.html.twig', array(
             'ad' => $ad,
-            'contactForm' => $form->createView()
+            'contactForm' => $form->createView(),
+            'isFavorite' => $isFavorite
         ));
     }
 
@@ -107,6 +116,75 @@ class DefaultController extends Controller
         ));
     }
 
+    public function editAction(Request $request, $pid, $token)
+    {
+        /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $ad = $adManager->findByPid($pid);
+
+        if ($ad->getToken() !== $token) {
+            throw new InvalidTokenException("No es posible acceder a la edición del anuncio. Por favor, accede desde el link facilitado en el email.");
+        }
+
+        $form = $this->createForm(new AdType(), $ad);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $adManager->updateAd($ad);
+
+            $this->get('session')->getFlashBag()->add(
+                'alert-success',
+                'Tu anuncio se ha editado correctamente.'
+            );
+        }
+
+        return $this->render('SegundoUsoAdBundle:Default:edit.html.twig', array(
+            'form' => $form->createView(),
+            'ad' => $ad
+        ));
+    }
+
+    public function deleteAction(Request $request, $pid, $token)
+    {
+        /** @var $adManager \SegundoUso\AdBundle\Model\AdManager */
+        $adManager = $this->get('seguso.ad_manager');
+
+        $ad = $adManager->findByPid($pid);
+
+        if ($ad->getToken() !== $token) {
+            throw new InvalidTokenException("No es posible acceder a la edición del anuncio. Por favor, accede desde el link facilitado en el email.");
+        }
+
+        $form = $this->createForm(new AdDeletionType(), $ad);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $adManager->remove($ad);
+
+            $this->get('session')->getFlashBag()->add(
+                'alert-success',
+                'Tu anuncio se ha eliminado correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('segundo_uso_frontend_ad_delete_confirmation'));
+        }
+
+        return $this->render('SegundoUsoAdBundle:Default:delete.html.twig', array(
+            'form' => $form->createView(),
+            'ad' => $ad
+        ));
+    }
+
+    public function deleteConfirmationAction()
+    {
+        return $this->render('SegundoUsoAdBundle:Default:delete_confirmation.html.twig');
+    }
+
     public function waitingConfirmationAction()
     {
         return $this->render('SegundoUsoAdBundle:Default:waiting_confirmation.html.twig');
@@ -123,6 +201,27 @@ class DefaultController extends Controller
 
         $adManager->publishAd($ad);
 
+        $this->sendEmailManager($ad);
+
         return $this->render('SegundoUsoAdBundle:Default:confirmation.html.twig', array('ad' => $ad));
+    }
+
+    private function sendEmailManager($ad)
+    {
+        $advertiser = $ad->getAdvertiser();
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Anuncio publicado en SegundoUso.org')
+            ->setFrom('dev@segundouso.org')
+            ->setTo($advertiser->getEmail())
+            ->setBody(
+                $this->render(
+                    'SegundoUsoAdBundle:Email:ad_manager_email.html.twig',
+                    array('ad' => $ad)
+                )
+            )
+            ->setContentType('text/html')
+        ;
+        $this->get('mailer')->send($message);
     }
 }

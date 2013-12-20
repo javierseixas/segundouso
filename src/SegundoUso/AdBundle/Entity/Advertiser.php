@@ -181,4 +181,9 @@ class Advertiser implements AdvertiserInterface
     {
         return $this->ads;
     }
+
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }

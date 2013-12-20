@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <div class="container">
+
+    {% block content %}
+        {{ block('fos_user_content')}}
+    {% endblock content %}
+
+    </div>
+
+{% endblock body %}
+
+{% block javascripts %}
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('bundles/madexperience/bootstrap/js/bootstrap.min.js') }}"></script>
+{% endblock %}

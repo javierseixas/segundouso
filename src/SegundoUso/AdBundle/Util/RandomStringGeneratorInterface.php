@@ -9,10 +9,10 @@
 namespace SegundoUso\AdBundle\Util;
 
 
-interface PublicIdGeneratorInterface
+interface RandomStringGeneratorInterface
 {
 
     const STRING_LENGTH = 64;
 
-    public function generate();
+    public function generate($length = self::STRING_LENGTH);
 }

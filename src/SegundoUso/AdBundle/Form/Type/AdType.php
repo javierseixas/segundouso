@@ -14,6 +14,11 @@ class AdType extends AbstractType
             ->add('title', 'text', array(
                 'label' => 'Título'
             ))
+            ->add('municipality', 'entity', array(
+                'class' => 'SegundoUso\LocationBundle\Entity\Municipality',
+                'label' => 'Ciudad',
+                'empty_value' => "Selecciona una ciudad"
+            ))
             ->add('location', 'text', array(
                 'label' => 'Localización'
             ))
@@ -26,6 +31,12 @@ class AdType extends AbstractType
                 'empty_value' => "Selecciona una categoría"
             ))
             ->add('advertiser', 'advertiser_email')
+            ->add('images', 'collection', array(
+                'type' => new AdImageType(),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ))
         ;
     }
 

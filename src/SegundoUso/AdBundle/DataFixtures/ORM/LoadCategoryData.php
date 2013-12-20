@@ -3,11 +3,11 @@
 namespace SegundoUso\AdBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use SegundoUso\AdBundle\Entity\Category;
 
-class LoadCategoryData extends AbstractFixture implements FixtureInterface
+class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -49,5 +49,10 @@ class LoadCategoryData extends AbstractFixture implements FixtureInterface
         $manager->persist($category);
 
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 2;
     }
 }
