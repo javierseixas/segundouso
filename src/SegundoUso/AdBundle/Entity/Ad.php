@@ -2,7 +2,9 @@
 
 namespace SegundoUso\AdBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use SegundoUso\AdBundle\Model\AdInterface;
+use SegundoUso\LocationBundle\Entity\Municipality;
 
 /**
  * Ad
@@ -35,6 +37,11 @@ class Ad implements AdInterface
     private $pid;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * @var boolean
      */
     private $published;
@@ -50,15 +57,41 @@ class Ad implements AdInterface
     private $updatedAt;
 
     /**
-     * @var \SegundoUso\AdBundle\Entity\Category
+     * @var \DateTime
+     */
+    private $deletedAt;
+
+    /**
+     * @var Category
      */
     private $category;
 
     /**
-     * @var \SegundoUso\AdBundle\Entity\Advertiser
+     * @var Advertiser
      */
     private $advertiser;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $marks;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+    /**
+     * @var Municipality
+     */
+    private $municipality;
+
+
+    public function __construct()
+    {
+        $this->marks = new ArrayCollection();
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -163,6 +196,25 @@ class Ad implements AdInterface
     }
 
     /**
+     * @param string $token
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+
+    /**
      * Set published
      *
      * @param boolean $published
@@ -234,10 +286,10 @@ class Ad implements AdInterface
     /**
      * Set category
      *
-     * @param \SegundoUso\AdBundle\Entity\Category $category
+     * @param Category $category
      * @return Ad
      */
-    public function setCategory(\SegundoUso\AdBundle\Entity\Category $category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
     
@@ -247,7 +299,7 @@ class Ad implements AdInterface
     /**
      * Get category
      *
-     * @return \SegundoUso\AdBundle\Entity\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -255,7 +307,7 @@ class Ad implements AdInterface
     }
 
     /**
-     * @param \SegundoUso\AdBundle\Entity\Advertiser $advertiser
+     * @param Advertiser $advertiser
      */
     public function setAdvertiser($advertiser)
     {
@@ -264,12 +316,128 @@ class Ad implements AdInterface
     }
 
     /**
-     * @return \SegundoUso\AdBundle\Entity\Advertiser
+     * @return Advertiser
      */
     public function getAdvertiser()
     {
         return $this->advertiser;
     }
+    
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Ad
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    
+        return $this;
+    }
 
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 
+    /**
+     * Add marks
+     *
+     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     * @return Ad
+     */
+    public function addMark(Mark $marks)
+    {
+        $this->marks[] = $marks;
+    
+        return $this;
+    }
+
+    /**
+     * Remove marks
+     *
+     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     */
+    public function removeMark(Mark $marks)
+    {
+        $this->marks->removeElement($marks);
+    }
+
+    /**
+     * Get marks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMarks()
+    {
+        return $this->marks;
+    }
+
+    /**
+     * Add images
+     *
+     * @param Image $image
+     * @return Ad
+     */
+    public function addImage(Image $image)
+    {
+        $image->setAd($this);
+        $this->images->add($image);
+    
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Set municipality
+     *
+     * @param Municipality $municipality
+     * @return Ad
+     */
+    public function setMunicipality(Municipality $municipality)
+    {
+        $this->municipality = $municipality;
+    
+        return $this;
+    }
+
+    /**
+     * Get municipality
+     *
+     * @return Municipality
+     */
+    public function getMunicipality()
+    {
+        return $this->municipality;
+    }
 }

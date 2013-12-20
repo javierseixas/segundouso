@@ -1,0 +1,70 @@
+{% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">Introduce los datos para el anuncio que quieres publicar:</div>
+    </div>
+
+    <div class="row">
+        {% for flashMessage in app.session.flashbag.get('alert-success') %}
+            <div class="col-md-12">
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            </div>
+        {% endfor %}
+        <div class="col-md-12">
+
+            {{ form_start(form, {'method':'POST', 'action':path('segundo_uso_frontend_ad_edit', {pid:ad.pid, token:ad.token}), 'attr':{'class':'form-horizontal', 'id':'FLAG_edit-ad-form'}}) }}
+            {{ form_errors(form) }}
+            <div class="form-group">
+                {{ form_label(form.title, 'Título', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.title, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.title, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.municipality, 'Ciudad', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.municipality, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.municipality, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.location, 'Localización', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.location, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.location, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.description, 'Descripción', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.description, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.description, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.category, 'Categoría', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.category, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.category, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.advertiser, 'Email', {'label_attr': {'class':'col-md-2'}}) }}
+                {{ form_widget(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
+                {{ form_errors(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.images, 'Fotografías', {'label_attr': {'class':'col-md-2'}}) }}
+                <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}">
+                    {% for image in form.images %}
+                        <li><img src="{{ image.vars.value.getWebPath | imagine_filter('my_thumb') }}" /> {{ form_row(image.file) }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2"><button type="submit" id="FLAG_send-edit-ad" class="btn btn-primary">Modificar</button></div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('bundles/segundousoad/js/image_collection.js') }}"></script>
+{% endblock javascripts %}

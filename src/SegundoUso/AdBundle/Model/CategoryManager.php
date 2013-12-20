@@ -51,4 +51,8 @@ class CategoryManager implements CategoryManagerInterface
         return $this->repository->findAll();
     }
 
+    public function findByName($name)
+    {
+        return $this->repository->findOneBy(array('name' => $name));
+    }
 }

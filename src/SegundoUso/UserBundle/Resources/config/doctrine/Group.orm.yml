@@ -1,0 +1,15 @@
+SegundoUso\UserBundle\Entity\Group:
+    type: entity
+    table: groups
+    repositoryClass: SegundoUso\UserBundle\Entity\GroupRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToMany:
+      users:
+        targetEntity: SegundoUso\UserBundle\Entity\User
+        mappedBy: groups
+    lifecycleCallbacks: {  }

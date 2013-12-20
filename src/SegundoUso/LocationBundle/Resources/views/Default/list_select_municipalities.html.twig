@@ -1,0 +1,3 @@
+{% for municipality in municipalities %}
+<option value="{{ municipality.id }}" {% if app.session.get('currentMunicipality') == municipality.id %}selected="selected"{% endif %}>{{ municipality.name }}</option>
+{% endfor %}

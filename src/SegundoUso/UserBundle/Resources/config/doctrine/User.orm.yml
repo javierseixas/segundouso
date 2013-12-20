@@ -1,0 +1,11 @@
+SegundoUso\UserBundle\Entity\User:
+    type:  entity
+    table: users
+    repositoryClass: SegundoUso\UserBundle\Entity\UserRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+
+    fields:

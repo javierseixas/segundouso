@@ -4,11 +4,11 @@
 namespace SegundoUso\AdBundle\Util;
 
 
-class PublicIdGenerator implements PublicIdGeneratorInterface
+class RandomStringGenerator implements RandomStringGeneratorInterface
 {
-    public function generate()
+    public function generate($length = self::STRING_LENGTH)
     {
-        return $this->getToken(self::STRING_LENGTH);
+        return $this->getToken($length);
     }
 
     /**

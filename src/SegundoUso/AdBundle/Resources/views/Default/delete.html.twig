@@ -1,0 +1,32 @@
+{% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>¿Estás seguro que deseas eliminar tu anuncio {{ ad.title }}?</h3>
+            <p>Si procedes, este anuncio desaparecerá de SegundoUso.org.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for flashMessage in app.session.flashbag.get('alert-success') %}
+            <div class="col-md-12">
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            </div>
+        {% endfor %}
+        <div class="col-md-12">
+
+            {{ form_start(form, {'method':'POST', 'action':path('segundo_uso_frontend_ad_delete', {pid:ad.pid, token:ad.token}), 'attr':{'class':'form-horizontal'}}) }}
+            {{ form_errors(form) }}
+            <div class="form-group">
+                <div class="col-md-offset-2">
+                    <button type="submit" id="FLAG_delete-ad" class="btn">Eliminar</button>
+                    <a href="{{ path('segundo_uso_frontend_ad_show', {pid:ad.pid}) }}" class="btn btn-link">Cancelar</a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock content %}

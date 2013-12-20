@@ -1,0 +1,15 @@
+{% extends "SegundoUsoFrontendBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block content %}
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}
+            <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+        {% else %}
+            <p><a href="{{ targetUrl }}">Volver a la home</a></p>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

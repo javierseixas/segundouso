@@ -6,6 +6,18 @@ segundo_uso_frontend_ad_create:
     pattern: /anuncio/crear
     defaults: { _controller: SegundoUsoAdBundle:Default:create }
 
+segundo_uso_frontend_ad_edit:
+    pattern: /anuncios/editar/{pid}/{token}
+    defaults: { _controller: SegundoUsoAdBundle:Default:edit }
+
+segundo_uso_frontend_ad_delete:
+    pattern: /anuncios/eliminar/{pid}/{token}
+    defaults: { _controller: SegundoUsoAdBundle:Default:delete }
+
+segundo_uso_frontend_ad_delete_confirmation:
+    pattern: /anuncios/eliminar/confirmacion
+    defaults: { _controller: SegundoUsoAdBundle:Default:deleteConfirmation }
+
 segundo_uso_frontend_ad_waiting_confirmation:
     pattern: /anuncio/por-confirmar
     defaults: { _controller: SegundoUsoAdBundle:Default:waitingConfirmation }
@@ -21,6 +33,23 @@ segundo_uso_frontend_ad_list:
 segundo_uso_frontend_ad_show:
     pattern: /anuncios/{pid}
     defaults: { _controller: SegundoUsoAdBundle:Default:show }
+
+segundo_uso_frontend_ad_mark_fraudulent:
+    pattern: /anuncios/{id}/mark
+    defaults: { _controller: SegundoUsoAdBundle:Ajax:markAd }
+
+segundo_uso_frontend_ad_favorite:
+    pattern: /anuncios/{id}/favorite
+    defaults: { _controller: SegundoUsoAdBundle:Ajax:favoriteAd }
+
+segundo_uso_frontend_ad_unfavorite:
+    pattern: /anuncios/{id}/unfavorite
+    defaults: { _controller: SegundoUsoAdBundle:Ajax:unfavoriteAd }
+
+segundo_uso_frontend_favorites:
+    pattern: /favoritos
+    defaults: { _controller: SegundoUsoAdBundle:Favorites:index }
+
 
 segundo_uso_frontend_manifiesto:
     pattern: /manifiesto

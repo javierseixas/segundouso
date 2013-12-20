@@ -3,12 +3,16 @@
 namespace SegundoUso\AdBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use SegundoUso\AdBundle\Util\PublicIdGeneratorInterface;
+use SegundoUso\AdBundle\Util\RandomStringGeneratorInterface;
+use SegundoUso\LocationBundle\Model\MunicipalityInterface;
 
 class AdManager implements AdManagerInterface
 {
+    const AD_TOKEN_LENGTH = 16;
+    const AD_PID_LENGTH = 64;
+
     /**
-     * @var \SegundoUso\AdBundle\Util\PublicIdGeneratorInterface
+     * @var \SegundoUso\AdBundle\Util\RandomStringGeneratorInterface
      */
     protected $pidGenerator;
 
@@ -19,7 +23,7 @@ class AdManager implements AdManagerInterface
     protected $class;
     protected $repository;
 
-    public function __construct(PublicIdGeneratorInterface $pidGenerator, ObjectManager $om, $class)
+    public function __construct(RandomStringGeneratorInterface $pidGenerator, ObjectManager $om, $class)
     {
         $this->pidGenerator = $pidGenerator;
 
@@ -44,6 +48,7 @@ class AdManager implements AdManagerInterface
     public function updateAd(AdInterface $ad, $andFlush = true)
     {
         if (null === $ad->getPid()) $this->setPublicId($ad);
+        if (null === $ad->getToken()) $this->setToken($ad);
 
         $this->objectManager->persist($ad);
         if ($andFlush) {
@@ -57,6 +62,11 @@ class AdManager implements AdManagerInterface
         $this->updateAd($ad);
     }
 
+    public function find($id)
+    {
+        return $this->repository->find($id);
+    }
+
     public function findByPid($pid)
     {
         return $this->repository->findOneBy(array('pid' => $pid));
@@ -64,7 +74,12 @@ class AdManager implements AdManagerInterface
 
     protected function setPublicId(AdInterface $ad)
     {
-        $ad->setPid($this->pidGenerator->generate());
+        $ad->setPid($this->pidGenerator->generate(self::AD_PID_LENGTH));
+    }
+
+    protected function setToken(AdInterface $ad)
+    {
+        $ad->setToken($this->pidGenerator->generate(self::AD_TOKEN_LENGTH));
     }
 
     public function findAllPublished()
@@ -78,5 +93,37 @@ class AdManager implements AdManagerInterface
             'published' => true,
             'category' => $category
         ));
+    }
+
+    public function findByMunicipalityAndPublished(MunicipalityInterface $municipality)
+    {
+        return $this->repository->findBy(array(
+            'published' => true,
+            'municipality' => $municipality
+        ));
+    }
+
+    public function findByCategoryMunicipalityAndPublished(CategoryInterface $category, MunicipalityInterface $municipality)
+    {
+        return $this->repository->findBy(array(
+            'published' => true,
+            'category' => $category,
+            'municipality' => $municipality
+        ));
+    }
+
+    public function findFavoritesInCookie($favoritesIds)
+    {
+        if (null === $favoritesIds || empty($favoritesIds)) return array();
+
+        return $this->repository->findPublishedByIds($favoritesIds);
+    }
+
+    public function remove(AdInterface $ad, $andFlush = true)
+    {
+        $this->objectManager->remove($ad);
+        if ($andFlush) {
+            $this->objectManager->flush();
+        }
     }
 }

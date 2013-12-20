@@ -1,0 +1,30 @@
+admin_ad:
+    pattern:  /
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:index" }
+
+admin_ad_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:show" }
+
+admin_ad_new:
+    pattern:  /new
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:new" }
+
+admin_ad_create:
+    pattern:  /create
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:create" }
+    requirements: { _method: post }
+
+admin_ad_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:edit" }
+
+admin_ad_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:update" }
+    requirements: { _method: post|put }
+
+admin_ad_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SegundoUsoAdBundle:Ad:delete" }
+    requirements: { _method: post|delete }

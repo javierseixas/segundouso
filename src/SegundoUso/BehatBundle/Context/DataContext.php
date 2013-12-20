@@ -70,6 +70,61 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^there are the following ads:$/
+     */
+    public function thereAreFollowingAds(TableNode $table)
+    {
+        foreach ($table->getHash() as $data) {
+            $pid = isset($data['pid']) ? $data['pid'] : null;
+            $token = isset($data['token']) ? $data['token'] : null;
+            $this->thereIsAd($data['title'], $data['category'], $pid, $token);
+        }
+    }
+
+    /**
+     * @Given /^I created an ad "([^""]*)"$/
+     */
+    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $email = null, $published = true)
+    {
+        if (null === $categoryName) {
+            throw new \Exception('You need to specify a category name existing in this scenario');
+        }
+
+        $ad = $this->getManager('ad')->createAd();
+        $ad
+            ->setTitle($title)
+            ->setDescription($this->faker->paragraph())
+            ->setLocation('Barcelona')
+            ->setPid((null !== $pid) ? $pid : $this->faker->uuid())
+            ->setToken((null !== $token) ? $token : $this->faker->uuid())
+            ->setPublished($published)
+        ;
+
+        if (null === $email) {
+            $ad->setAdvertiser($this->createAdvertiser());
+        }
+
+        $category = $this->getManager('category')->findByName($categoryName);
+
+        $ad->setCategory($category);
+
+        $this->getEntityManager()->persist($ad);
+        $this->getEntityManager()->flush();
+    }
+
+    public function createAdvertiser($email = null)
+    {
+        $advertiser = $this->getManager('advertiser')->createAdvertiser();
+        $advertiser->setEmail((null !== $email) ? : $this->faker->freeEmail());
+        $advertiser->setValidated(true);
+
+        return $advertiser;
+    }
+
+
+
+
+    /**
      * @Given /^taxonomy "([^""]*)" has following taxons:$/
      */
     public function taxonomyHasFollowingTaxons($taxonomyName, TableNode $taxonsTable)

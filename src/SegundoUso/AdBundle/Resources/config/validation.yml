@@ -1,0 +1,21 @@
+SegundoUso\AdBundle\Entity\Image:
+    properties:
+        file:
+            - Image:
+                maxSize: 6000000
+
+SegundoUso\AdBundle\Entity\Ad:
+    properties:
+        title:
+            - NotBlank: ~
+        location:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+        category:
+            - NotNull: ~
+
+SegundoUso\AdBundle\Entity\Advertiser:
+    properties:
+        email:
+            - Email: ~
