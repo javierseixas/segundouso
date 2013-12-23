@@ -42,6 +42,5 @@ security:
         - { path: ^/admin/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 

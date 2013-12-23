@@ -1,7 +1,9 @@
 parameters:
-#    segundo_uso_location.example.class: SegundoUso\LocationBundle\Example
+    seguso.municipality_manager.class: SegundoUso\LocationBundle\Model\MunicipalityManager
+    seguso.municipality.class: SegundoUso\LocationBundle\Entity\Municipality
 
 services:
-#    segundo_uso_location.example:
-#        class: %segundo_uso_location.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    seguso.municipality_manager:
+        class: %seguso.municipality_manager.class%
+        arguments: [@doctrine.orm.entity_manager, %seguso.municipality.class%]
+

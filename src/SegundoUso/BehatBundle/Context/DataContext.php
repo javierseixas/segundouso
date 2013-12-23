@@ -48,6 +48,28 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^there are the following municipalities:$/
+     */
+    public function thereAreFollowingMunicipalities(TableNode $table)
+    {
+        foreach ($table->getHash() as $data) {
+            $this->thereIsMunicipality($data['name']);
+        }
+    }
+
+    /**
+     * @Given /^I created a municipality "([^""]*)"$/
+     */
+    public function thereIsMunicipality($name)
+    {
+        $municipality = $this->getManager('municipality')->create();
+        $municipality->setName($name)->setSlug(strtolower($name));
+
+        $this->getEntityManager()->persist($municipality);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
      * @Given /^there are the following categories:$/
      */
     public function thereAreFollowingCategories(TableNode $table)
@@ -77,23 +99,26 @@ class DataContext extends BehatContext implements KernelAwareInterface
         foreach ($table->getHash() as $data) {
             $pid = isset($data['pid']) ? $data['pid'] : null;
             $token = isset($data['token']) ? $data['token'] : null;
-            $this->thereIsAd($data['title'], $data['category'], $pid, $token);
+            $municipality = isset($data['municipality']) ? $this->getManager('municipality')->findBySlug($data['municipality']) : null;
+            $this->thereIsAd($data['title'], $data['category'], $pid, $token, $municipality);
         }
     }
 
     /**
      * @Given /^I created an ad "([^""]*)"$/
      */
-    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $email = null, $published = true)
+    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $municipality = null, $email = null, $published = true)
     {
         if (null === $categoryName) {
             throw new \Exception('You need to specify a category name existing in this scenario');
         }
 
+        /** @var \SegundoUso\AdBundle\Entity\Ad $ad */
         $ad = $this->getManager('ad')->createAd();
         $ad
             ->setTitle($title)
             ->setDescription($this->faker->paragraph())
+            ->setMunicipality($municipality)
             ->setLocation('Barcelona')
             ->setPid((null !== $pid) ? $pid : $this->faker->uuid())
             ->setToken((null !== $token) ? $token : $this->faker->uuid())

@@ -40,9 +40,10 @@ class DefaultController extends Controller
 
     public function changeMunicipalityAction(Request $request)
     {
-        $municipality = $request->get('municipality');
+        $municipalityId = $request->get('municipality');
+        $municipality = $this->get('seguso.municipality_manager')->find($municipalityId);
         $session = $this->getRequest()->getSession();
-        $session->set('currentMunicipality', $municipality);
+        $session->set('currentMunicipality', $municipality->getSlug());
 
         return $this->redirect($request->get('currentRoute'));
     }

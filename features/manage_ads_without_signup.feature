@@ -7,9 +7,12 @@ Feature: Manage the ads I created without sign up
         Given there are the following categories:
             | name              |
             | Muebles           |
+          And there are the following municipalities:
+            | name              |
+            | Barcelona         |
           And there are the following ads:
-            | title             | category    | pid  | token |
-            | Mesa de billar    | Muebles     | 1234 | abcd  |
+            | title             | category    | pid  | token | municipality |
+            | Mesa de billar    | Muebles     | 1234 | abcd  | barcelona    |
 # TODO Fix the problem why it doesn't find any security token
 #          And I should not be logged in
 

@@ -1,7 +1,9 @@
 parameters:
-#    segundo_uso_core.example.class: SegundoUso\CoreBundle\Example
+    seguso.listener.default_municipality.class: SegundoUso\CoreBundle\EventListener\DefaultMunicipalityListener
 
 services:
-#    segundo_uso_core.example:
-#        class: %segundo_uso_core.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    seguso.listener.default_municipality:
+        class: %seguso.listener.default_municipality.class%
+        arguments: [@seguso.municipality_manager]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

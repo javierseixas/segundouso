@@ -5,15 +5,18 @@ Feature: Browse ads without signing up
 
     Background:
         Given I am on the homepage
+          And there are the following municipalities:
+            | name              |
+            | Barcelona         |
           And there are the following categories:
             | name              |
             | Muebles           |
             | Electrodomésticos |
             | Menaje            |
           And there are the following ads:
-            | title             | category    |
-            | Mesa de billar    | Muebles     |
-            | Mecedora          | Muebles     |
+            | title             | category    | municipality |
+            | Mesa de billar    | Muebles     | barcelona    |
+            | Mecedora          | Muebles     | barcelona    |
            # TODO Fix the problem why it doesn't find any security token
 #          And I should not be logged in
 
