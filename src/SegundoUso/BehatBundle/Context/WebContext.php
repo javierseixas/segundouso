@@ -71,6 +71,7 @@ class WebContext extends MinkContext implements KernelAwareInterface
     {
         return array(
             new When('I fill in "ad_title" with "Taula"'),
+            new When('I select "Barcelona" from "ad_municipality"'),
             new When('I fill in "ad_location" with "Barcelona"'),
             new When('I fill in "ad_description" with "Es muy bonita"'),
             new When('I select "Muebles" from "ad_category"'),

@@ -7,9 +7,12 @@ Feature: Contact advertiser regarding an interesting ad
         Given there are the following categories:
             | name              |
             | Muebles           |
+          And there are the following municipalities:
+            | name              |
+            | Barcelona         |
           And there are the following ads:
-            | title             | category    | pid  |
-            | Mesa de billar    | Muebles     | 1234 |
+            | title             | category    | pid  | municipality |
+            | Mesa de billar    | Muebles     | 1234 | barcelona    |
         # TODO Fix: this statement gives problems on sahi because of the use of cookies
           And I am on the ad details page for ad "1234"
 # TODO Fix the problem why it doesn't find any security token
