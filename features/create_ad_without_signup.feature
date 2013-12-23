@@ -5,6 +5,10 @@ Feature: Create an ad without signing up
 
     Background:
         Given I am on the homepage
+          And there are the following municipalities:
+            | name              |
+            | Barcelona         |
+            | Sant Boi          |
           And there are the following categories:
             | name              |
             | Muebles           |

@@ -21,9 +21,9 @@ class DefaultController extends Controller
 
         $category = null;
 
-        $municipality = $this->getDoctrine()->getRepository('SegundoUsoLocationBundle:Municipality')->find($request->getSession()->get('currentMunicipality'));
+        $municipality = $this->get('seguso.municipality_manager')->findBySlug($request->getSession()->get('currentMunicipality'));
 
-        if (null !== $categoryId = $request->get('categoryId')) {
+        if ("" !== $categoryId = $request->get('categoryId')) {
             $category = $this->getDoctrine()->getRepository('SegundoUsoAdBundle:Category')->find($categoryId);
             $ads = $adManager->findByCategoryMunicipalityAndPublished($category, $municipality);
         } else {
