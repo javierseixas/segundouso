@@ -9,3 +9,20 @@ SegundoUso\UserBundle\Entity\User:
                 strategy: AUTO
 
     fields:
+    oneToMany:
+        ads:
+            targetEntity: SegundoUso\AdBundle\Entity\Ad
+            mappedBy: user
+            cascade: ["persist","remove"]
+    manyToMany:
+        favouriteAds:
+          targetEntity: SegundoUso\AdBundle\Entity\Ad
+          joinTable:
+            name: favourite_ads
+            joinColumns:
+              user_id:
+                referencedColumnName: id
+            inverseJoinColumns:
+              ad_id:
+                referencedColumnName: id
+          cascade: ["remove"]

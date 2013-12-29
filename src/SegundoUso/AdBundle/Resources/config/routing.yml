@@ -9,3 +9,7 @@ segundo_uso_ad_admin_category:
 SegundoUsoAdBundle_admin_ad:
     resource: "@SegundoUsoAdBundle/Resources/config/routing/ad.yml"
     prefix:   /admin/ad
+
+SegundoUsoAdBundle_admin_fraudulent:
+    resource: "@SegundoUsoAdBundle/Resources/config/routing/fraudulent.yml"
+    prefix:   /admin

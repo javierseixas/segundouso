@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Anuncios fraudulentos</h1>
+
+    <table class="records_list table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Avisos</th>
+                <th>Enlace</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ad in ads %}
+            <tr>
+                <td>{{ ad.title }}</td>
+                <td class="FLAG_count-cell">{{ ad.marks.count }}</td>
+                <td><a href="{{ path('segundo_uso_frontend_ad_show', { pid: ad.pid }) }}" target="_blank">Ver</a></td>
+                <td><a href="{{ path('segundo_uso_fraudulent_ads_delete', { id: ad.id }) }}" class="btn btn-danger btn-sm">Eliminar</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

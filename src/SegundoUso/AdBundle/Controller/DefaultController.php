@@ -7,6 +7,7 @@ use SegundoUso\AdBundle\Event\FormEvent;
 use SegundoUso\AdBundle\Exception\InvalidTokenException;
 use SegundoUso\AdBundle\Form\Type\AdDeletionType;
 use SegundoUso\AdBundle\Form\Type\AdType;
+use SegundoUso\AdBundle\Model\AdInterface;
 use SegundoUso\AdBundle\SegundoUsoAdEvents;
 use SegundoUso\FrontendBundle\Form\Type\ContactAdvertiserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,7 +44,7 @@ class DefaultController extends Controller
         $ad = $adManager->findByPid($pid);
 
         // TODO Refactor this (maybe putting it inside the Entity or creating a service for this)
-        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME), true);
+        $favoritesCookie = json_decode($request->cookies->get(AjaxController::FAVORITES_COOKIE_NAME) ? : '{}', true);
         $isFavorite = in_array($ad->getId(), $favoritesCookie);
 
         $form = $this->createForm(new ContactAdvertiserType());
@@ -96,7 +97,7 @@ class DefaultController extends Controller
         $ad = $adManager->createAd();
         $ad->setPublished(false);
 
-        $form = $this->createForm(new AdType(), $ad);
+        $form = $this->createForm(new AdType($this->get('security.context')), $ad);
 
         $form->handleRequest($request);
 
@@ -127,7 +128,7 @@ class DefaultController extends Controller
             throw new InvalidTokenException("No es posible acceder a la edición del anuncio. Por favor, accede desde el link facilitado en el email.");
         }
 
-        $form = $this->createForm(new AdType(), $ad);
+        $form = $this->createForm(new AdType($this->get('security.context')), $ad);
 
         $form->handleRequest($request);
 
@@ -208,12 +209,10 @@ class DefaultController extends Controller
 
     private function sendEmailManager($ad)
     {
-        $advertiser = $ad->getAdvertiser();
-
         $message = \Swift_Message::newInstance()
             ->setSubject('Anuncio publicado en SegundoUso.org')
             ->setFrom('dev@segundouso.org')
-            ->setTo($advertiser->getEmail())
+            ->setTo($this->getEmail($ad))
             ->setBody(
                 $this->render(
                     'SegundoUsoAdBundle:Email:ad_manager_email.html.twig',
@@ -223,5 +222,15 @@ class DefaultController extends Controller
             ->setContentType('text/html')
         ;
         $this->get('mailer')->send($message);
+    }
+
+    // TODO Abstract this function to a new class. The same problem in AdConfirmationEmailListener class.
+    private function getEmail(AdInterface $ad)
+    {
+        if (null !== $ad->getUser()) {
+            return $ad->getUser()->getEmail();
+        } else {
+            return $ad->getAdvertiser()->getEmail();
+        }
     }
 }

@@ -72,6 +72,11 @@ class Ad implements AdInterface
     private $advertiser;
 
     /**
+     * @var \SegundoUso\UserBundle\Entity\User
+     */
+    private $user;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $marks;
@@ -322,6 +327,24 @@ class Ad implements AdInterface
     {
         return $this->advertiser;
     }
+
+    /**
+     * @param \SegundoUso\UserBundle\Entity\User $user
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return Advertiser
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
     
     /**
      * Set deletedAt
@@ -349,24 +372,26 @@ class Ad implements AdInterface
     /**
      * Add marks
      *
-     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     * @param \SegundoUso\AdBundle\Entity\Mark $mark
      * @return Ad
      */
-    public function addMark(Mark $marks)
+    public function addMark(Mark $mark)
     {
-        $this->marks[] = $marks;
-    
+        $mark->setAd($this);
+
+        $this->marks->add($mark);
+
         return $this;
     }
 
     /**
      * Remove marks
      *
-     * @param \SegundoUso\AdBundle\Entity\Mark $marks
+     * @param \SegundoUso\AdBundle\Entity\Mark $mark
      */
-    public function removeMark(Mark $marks)
+    public function removeMark(Mark $mark)
     {
-        $this->marks->removeElement($marks);
+        $this->marks->removeElement($mark);
     }
 
     /**

@@ -1,28 +1,26 @@
 {% extends 'SegundoUsoFrontendBundle::layout.html.twig' %}
 
 {% block content %}
-    <div class="row list" id="FLAG_favorites-list">
+    <div class="row list" id="FLAG_mis-anuncios-list">
 
-        <div class="col-md-12"><h1>Anuncios favoritos</h1></div>
+        <div class="col-md-12"><h1>Mis Anuncios</h1></div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th>Anuncio</th>
-                    <th>Ubicación</th>
-                    <th>Opciones</th>
-                </tr>
+                    <tr>
+                        <th>Anuncio</th>
+                        <th>Opciones</th>
+                    </tr>
                 </thead>
                 <tbody>
-
             {% for ad in ads %}
                 <tr class="ad">
                     <td><a href="{{ path('segundo_uso_frontend_ad_show', {pid: ad.pid}) }}">{{ ad.title }}</a></td>
-                    <td>{{ ad.municipality }} ({{ ad.location }})</a></td>
                     <td>
-                        <button type="button" class="btn btn-success favorite-marker unfavoritable" data-adid="{{ ad.id }}" data-favorite-url="{{ path('segundo_uso_frontend_ad_favorite', {id:ad.id}) }}" data-unfavorite-url="{{ path('segundo_uso_frontend_ad_unfavorite', {id:ad.id}) }}">
-                            <span class="glyphicon glyphicon-heart"></span> <span class="favorite-text">Favorito</span>
-                        </button>
+                        <div class="btn-group">
+                            <a href="{{ path('segundo_uso_frontend_ad_edit', {pid:ad.pid, token:ad.token}) }}" class="btn btn-default btn-sm">Editar</a>
+                            <a href="{{ path('segundo_uso_frontend_ad_delete', {pid:ad.pid, token:ad.token}) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </div>
                     </td>
                 </tr>
             {% else %}
@@ -31,6 +29,7 @@
                             No tienes anuncios publicados.
                         </div></td>
                 </tr>
+
             {% endfor %}
                 </tbody>
             </table>
@@ -42,7 +41,5 @@
 {% block javascripts %}
 
     {{ parent() }}
-
-    <script type="text/javascript" src="{{ asset('bundles/segundousoad/js/favoritable.js') }}"></script>
 
 {% endblock javascripts %}

@@ -1,0 +1,7 @@
+segundo_uso_fraudulent_ads:
+    pattern: /fraudulent-ads
+    defaults: { _controller: "SegundoUsoAdBundle:FraudulentAd:index" }
+
+segundo_uso_fraudulent_ads_delete:
+    pattern: /fraudulent-ads/{id}/delete
+    defaults: { _controller: "SegundoUsoAdBundle:FraudulentAd:delete" }

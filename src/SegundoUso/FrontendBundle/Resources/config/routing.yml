@@ -50,6 +50,19 @@ segundo_uso_frontend_favorites:
     pattern: /favoritos
     defaults: { _controller: SegundoUsoAdBundle:Favorites:index }
 
+segundo_uso_frontend_search:
+    pattern: /busqueda
+    defaults: { _controller: SegundoUsoFrontendBundle:Search:index }
+
+
+segundo_uso_frontend_account_show_my_ads:
+    pattern: /cuenta/mis-anuncios
+    defaults: { _controller: SegundoUsoUserBundle:Account:showMyAds }
+
+segundo_uso_frontend_account_show_favorite_ads:
+    pattern: /cuenta/mis-favoritos
+    defaults: { _controller: SegundoUsoUserBundle:Account:showFavoriteAds }
+
 
 segundo_uso_frontend_manifiesto:
     pattern: /manifiesto

@@ -36,11 +36,13 @@
                 {{ form_widget(form.category, {'attr': {'class':'col-md-8'}}) }}
                 {{ form_errors(form.category, {'attr': {'class':'col-md-8'}}) }}
             </div>
+            {% if form.offsetExists('advertiser') %}
             <div class="form-group">
                 {{ form_label(form.advertiser, 'Email', {'label_attr': {'class':'col-md-2'}}) }}
                 {{ form_widget(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
                 {{ form_errors(form.advertiser, {'attr': {'class':'col-md-8'}}) }}
             </div>
+            {% endif %}
             <div class="form-group">
                 {{ form_label(form.images, 'Fotografías', {'label_attr': {'class':'col-md-2'}}) }}
                 <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}">

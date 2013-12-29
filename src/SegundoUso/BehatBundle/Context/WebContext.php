@@ -49,6 +49,69 @@ class WebContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^I am logged in as administrator$/
+     */
+    public function iAmLoggedInAsAdministrator()
+    {
+        $this->iAmLoggedInAsRole('ROLE_ADMIN', 'admin_login');
+    }
+
+    /**
+     * @Given /^I am logged in as user$/
+     */
+    public function iAmLoggedInAsUser()
+    {
+        $this->iAmLoggedInAsRole('ROLE_USER', 'fos_user_security_login');
+    }
+
+    /**
+     * @Given /^I am logged in as "([^"]*)" with password "([^"]*)"$/
+     */
+    public function iAmLoggedInAs($username, $password)
+    {
+        $this->getSession()->visit($this->generateUrl('fos_user_security_login'), array(), true);
+
+        $this->fillField('_username', $username);
+        $this->fillField('_password', $password);
+        $this->pressButton('_submit');
+    }
+
+
+    /**
+     * Create user and login with given role.
+     *
+     * @param string $role
+     */
+    private function iAmLoggedInAsRole($role, $route)
+    {
+        $this->getSubContext('data')->thereIsUser('pepe', 'pepe@pepe.com', 'pepe', $role);
+        $this->getSession()->visit($this->generateUrl($route), array(), true);
+
+        $this->fillField('_username', 'pepe');
+        $this->fillField('_password', 'pepe');
+        $this->pressButton('_submit');
+    }
+
+    /**
+     * @Given /^I am on my ads page$/
+     */
+    public function iAmOnMyAdsPage()
+    {
+        return new Then('I am on "/cuenta/mis-anuncios"');
+    }
+
+    /**
+     * @Given /^I am on my favorite ads page$/
+     */
+    public function iAmOnMyFavoriteAdsPage()
+    {
+        return new Then('I am on "/cuenta/mis-favoritos"');
+    }
+
+
+
+
+    /**
      * @When /^I click the new ad button$/
      */
     public function iClickTheNewAdButton()
@@ -78,6 +141,36 @@ class WebContext extends MinkContext implements KernelAwareInterface
             new When('I fill in "ad_advertiser" with "dev@segundouso.org"'),
             new When('I press "FLAG_send-new-ad-form"'),
         );
+    }
+
+    /**
+     * @When /^The form should not ask me for an email$/
+     */
+    public function theFormShouldNotAskMeForEmail()
+    {
+        return new Given('I should not see a "#ad_advertiser" element');
+    }
+
+    /**
+     * @When /^I fill the form$/
+     */
+    public function iFillTheForm()
+    {
+        return array(
+            new When('I fill in "ad_title" with "Taula"'),
+            new When('I select "Barcelona" from "ad_municipality"'),
+            new When('I fill in "ad_location" with "Barcelona"'),
+            new When('I fill in "ad_description" with "Es muy bonita"'),
+            new When('I select "Muebles" from "ad_category"'),
+        );
+    }
+
+    /**
+     * @When /^I send the form$/
+     */
+    public function iSendTheForm()
+    {
+        return new When('I press "FLAG_send-new-ad-form"');
     }
 
     /**
@@ -218,8 +311,83 @@ class WebContext extends MinkContext implements KernelAwareInterface
         return new When('I press "FLAG_delete-ad"');
     }
 
+    /**
+     * @When /^I search for "([^"]*)"$/
+     */
+    public function iSearchFor($term)
+    {
+        return array(
+            new When('I fill in "FLAG_search-input" with "'.$term.'"'),
+            new When('I press "FLAG_search-button"'),
+        );
+    }
+    /**
+     * @Given /^I am on the marked ads page$/
+     */
+    public function iAmOnTheMarkedAdsPage()
+    {
+        $this->getSession()->visit($this->generateUrl('segundo_uso_fraudulent_ads'), array(), true);
+    }
+
+    /**
+     * @Then /^I should see ad "([^"]*)" marked (\d+) times$/
+     */
+    public function iShouldSeeAdMarkedTimes($adTitle, $count)
+    {
+        return array(
+            new Then('I should see text matching "'.$adTitle.'"'),
+            new Then('the ".FLAG_count-cell" element should contain "'.$count.'"'),
+        );
+    }
+
+    /**
+     * @When /^I delete ad "([^"]*)"$/
+     */
+    public function iDeleteAd($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I click "([^"]*)" near "([^"]*)"$/
+     * @When /^I press "([^"]*)" near "([^"]*)"$/
+     */
+    public function iClickNear($button, $value)
+    {
+        $tr = $this->getSession()->getPage()->find('css',
+            sprintf('table tbody tr:contains("%s")', $value)
+        );
+
+        if (null === $tr) {
+            throw new ExpectationException(sprintf('Table row with value "%s" does not exist', $value), $this->getSession());
+        }
+
+        $locator = sprintf('button:contains("%s")', $button);
+
+        if ($tr->has('css', $locator)) {
+            $tr->find('css', $locator)->press();
+        } else {
+            $tr->clickLink($button);
+        }
+    }
 
 
+
+    /**
+     * Generate url.
+     *
+     * @param string  $route
+     * @param array   $parameters
+     * @param Boolean $absolute
+     *
+     * @return string
+     */
+    private function generateUrl($route, array $parameters = array(), $absolute = false)
+    {
+        $path = $this->getService('router')->generate($route, $parameters, $absolute);
+
+        return sprintf('%s%s', $this->getMinkParameter('base_url'), $path);
+    }
 
     /**
      * Get service by id.

@@ -7,6 +7,8 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Faker\Factory as FakerFactory;
+use SegundoUso\AdBundle\Entity\Mark;
+use SegundoUso\UserBundle\Entity\User;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Locale\Locale;
@@ -100,14 +102,16 @@ class DataContext extends BehatContext implements KernelAwareInterface
             $pid = isset($data['pid']) ? $data['pid'] : null;
             $token = isset($data['token']) ? $data['token'] : null;
             $municipality = isset($data['municipality']) ? $this->getManager('municipality')->findBySlug($data['municipality']) : null;
-            $this->thereIsAd($data['title'], $data['category'], $pid, $token, $municipality);
+            $marksNumber = isset($data['marks']) ? $data['marks'] : 0;
+            $user = isset($data['username']) ? $this->getService('fos_user.user_manager')->findUserByUsername($data['username']) : null;
+            $this->thereIsAd($data['title'], $data['category'], $pid, $token, $municipality, $user, $marksNumber);
         }
     }
 
     /**
      * @Given /^I created an ad "([^""]*)"$/
      */
-    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $municipality = null, $email = null, $published = true)
+    public function thereIsAd($title = null, $categoryName = null, $pid = null, $token = null, $municipality = null, $user = null, $marksNumber = 0, $email = null, $published = true)
     {
         if (null === $categoryName) {
             throw new \Exception('You need to specify a category name existing in this scenario');
@@ -125,7 +129,13 @@ class DataContext extends BehatContext implements KernelAwareInterface
             ->setPublished($published)
         ;
 
-        if (null === $email) {
+        for ($i = 0; $i < $marksNumber; $i++) {
+            $ad->addMark(new Mark());
+        }
+
+        if (null !== $user) {
+            $ad->setUser($user);
+        } elseif (null === $email) {
             $ad->setAdvertiser($this->createAdvertiser());
         }
 
@@ -196,34 +206,25 @@ class DataContext extends BehatContext implements KernelAwareInterface
     {
         foreach ($table->getHash() as $data) {
             $this->thereIsUser(
+                $data['username'],
                 $data['email'],
                 isset($data['password']) ? $data['password'] : $this->faker->word(),
                 'ROLE_USER',
-                isset($data['enabled']) ? $data['enabled'] : true,
-                isset($data['address']) ? $data['address'] : null
+                isset($data['enabled']) ? $data['enabled'] : 'yes'
             );
         }
     }
 
-    public function thereIsUser($email, $password, $role = null, $enabled = 'yes', $address = null)
+    public function thereIsUser($username, $email, $password, $role = null, $enabled = 'yes')
     {
-        if (null === $user = $this->getRepository('user')->findOneBy(array('email' => $email))) {
-            $addressData = explode(',', $address);
-            $addressData = array_map('trim', $addressData);
+        if (null === $user = $this->getRepository('SegundoUsoUserBundle:User')->findOneBy(array('email' => $email))) {
 
             $user = new User();
 
-            $user->setFirstname($this->faker->firstName);
-            $user->setLastname($this->faker->lastName);
-            $user->setFirstname(null === $address ? $this->faker->firstName : $addressData[0]);
-            $user->setLastname(null === $address ? $this->faker->lastName : $addressData[1]);
+            $user->setUsername($username);
             $user->setEmail($email);
             $user->setEnabled('yes' === $enabled);
             $user->setPlainPassword($password);
-
-            if (null !== $address) {
-                $user->setShippingAddress($this->createAddress($address));
-            }
 
             if (null !== $role) {
                 $user->addRole($role);

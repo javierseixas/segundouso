@@ -23,7 +23,7 @@
         <header>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4"><a href="{{ path('segundo_uso_frontend_homepage') }}"><img src="{{ asset('bundles/segundousofrontend/img/logo-segundo-uso.png') }}"></a></div>
+                    <div class="col-md-4"><a href="{{ path('segundo_uso_frontend_homepage') }}"><img class="img-responsive" src="{{ asset('bundles/segundousofrontend/img/logo-segundo-uso.png') }}"></a></div>
                     <div class="col-md-3">
                         <form action="{{ path('segundo_uso_location_change_municipality') }}" method="post" id="city-selector" class="form-inline" role="form">
                             <div class="form-group">
@@ -34,13 +34,33 @@
                                 <input type="hidden" name="currentRoute" value="{{ app.request.requesturi }}">
                             </div>
                         </form>
+                        <form action="{{ path('segundo_uso_frontend_search') }}" method="post" class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" name="searched_term" id="FLAG_search-input" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" id="FLAG_search-button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                        </form>
                     </div>
                     <div class="col-md-5">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{ path('segundo_uso_frontend_ad_create') }}">Anunciar gratis</a></li>
-                            <li><a href="{{ path('segundo_uso_frontend_favorites') }}">Favoritos</a></li>
-                            <li><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></li>
-                            <li><a href="{{ path('fos_user_security_login') }}">Entrar</a></li>
+                            {% if app.user %}
+                                <li>
+                                    <a href="#" class="btn btn-default btn-link dropdown-toggle" data-toggle="dropdown">
+                                        Mi espacio <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('segundo_uso_frontend_account_show_my_ads') }}">Mis anuncios</a></li>
+                                        <li><a href="{{ path('segundo_uso_frontend_account_show_favorite_ads') }}">Favoritos</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li><a href="{{ path('segundo_uso_frontend_favorites') }}">Favoritos</a></li>
+                                <li><a href="{{ path('fos_user_registration_register') }}">Registrarse</a></li>
+                                <li><a href="{{ path('fos_user_security_login') }}">Entrar</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

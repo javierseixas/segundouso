@@ -41,6 +41,7 @@ security:
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/cuenta/, role: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 

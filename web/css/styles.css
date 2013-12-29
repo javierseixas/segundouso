@@ -1,16 +1,16 @@
 
 
-/* line 4, assetic_compassWDrweD.scss */
+/* line 4, assetic_compassbD3O6h.scss */
 header {
   padding: 10px 0;
 }
 
-/* line 8, assetic_compassWDrweD.scss */
+/* line 8, assetic_compassbD3O6h.scss */
 html, body {
   height: 100%;
 }
 
-/* line 11, assetic_compassWDrweD.scss */
+/* line 11, assetic_compassbD3O6h.scss */
 .page-wrap {
   min-height: 100%;
   /* equal to footer height */
@@ -64,6 +64,7 @@ footer h4 {
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
 }
+
 /* line 59, assetic_compassWDrweD.scss */
 footer a {
   color: #13890a;
@@ -82,6 +83,7 @@ footer ul li {
   font-size: 13px;
   margin: 3px 0;
 }
+
 /* line 74, assetic_compassWDrweD.scss */
 footer .copyright {
   font-size: 12px;

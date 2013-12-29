@@ -6,3 +6,4 @@ services:
     seguso.municipality_manager:
         class: %seguso.municipality_manager.class%
         arguments: [@doctrine.orm.entity_manager, %seguso.municipality.class%]
+

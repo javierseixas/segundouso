@@ -3,8 +3,10 @@
 namespace SegundoUso\AdBundle\Model;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\UserBundle\Model\UserInterface;
 use SegundoUso\AdBundle\Util\RandomStringGeneratorInterface;
 use SegundoUso\LocationBundle\Model\MunicipalityInterface;
+use SegundoUso\LocationBundle\Model\MunicipalityManagerInterface;
 
 class AdManager implements AdManagerInterface
 {
@@ -112,6 +114,18 @@ class AdManager implements AdManagerInterface
         ));
     }
 
+    public function findFraudulent()
+    {
+        $ads = $this->repository->findAll();
+
+        $fraudulentAds = array();
+        foreach($ads as $ad) {
+            if (!$ad->getMarks()->isEmpty()) $fraudulentAds[] = $ad;
+        }
+
+        return $fraudulentAds;
+    }
+
     public function findFavoritesInCookie($favoritesIds)
     {
         if (null === $favoritesIds || empty($favoritesIds)) return array();
@@ -119,8 +133,27 @@ class AdManager implements AdManagerInterface
         return $this->repository->findPublishedByIds($favoritesIds);
     }
 
-    public function remove(AdInterface $ad, $andFlush = true)
+    public function findBySearchedTerm($tern, MunicipalityInterface $municipality)
     {
+        return $this->repository->findBySearchedTerm($tern, $municipality);
+    }
+
+    public function findAdsForUser(UserInterface $user)
+    {
+        return $this->repository->findBy(array('user' => $user));
+    }
+
+    public function remove(AdInterface $ad, $andFlush = true, $hardDelete = false)
+    {
+        if ($hardDelete) {
+            foreach ($this->objectManager->getEventManager()->getListeners() as $eventName => $listeners) {
+                foreach ($listeners as $listener) {
+                    if ($listener instanceof \Gedmo\SoftDeleteable\SoftDeleteableListener) {
+                        $this->objectManager->getEventManager()->removeEventListener($eventName, $listener);
+                    }
+                }
+            }
+        }
         $this->objectManager->remove($ad);
         if ($andFlush) {
             $this->objectManager->flush();

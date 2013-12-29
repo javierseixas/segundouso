@@ -3,6 +3,7 @@
 namespace SegundoUso\AdBundle\EventListener;
 
 use SegundoUso\AdBundle\Event\AdEvent;
+use SegundoUso\AdBundle\Model\AdInterface;
 
 class AdConfirmationEmailListener
 {
@@ -35,7 +36,7 @@ class AdConfirmationEmailListener
         $message = \Swift_Message::newInstance()
             ->setSubject('Confirmación de anuncio en SegundoUso.org')
             ->setFrom('dev@segundouso.org')
-            ->setTo($advertiser->getEmail())
+            ->setTo($this->getEmail($ad))
             ->setBody(
                 $this->twig->render(
                     'SegundoUsoAdBundle:Email:ad_confirmation_email.html.twig',
@@ -45,5 +46,15 @@ class AdConfirmationEmailListener
             ->setContentType('text/html')
         ;
         $this->mailer->send($message);
+    }
+
+    // TODO Abstract this function to a new class. The same problem in AdBundle\Controller\DefaultController class.
+    private function getEmail(AdInterface $ad)
+    {
+        if (null !== $ad->getUser()) {
+            return $ad->getUser()->getEmail();
+        } else {
+            return $ad->getAdvertiser()->getEmail();
+        }
     }
 }

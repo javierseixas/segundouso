@@ -31,6 +31,13 @@ class AjaxController extends Controller
 
     public function favoriteAdAction(Request $request, $id)
     {
+        if (null !== $user = $this->getUser()) {
+            $ad = $this->get('seguso.ad_manager')->find($id);
+            $user->addFavouriteAd($ad);
+            $this->getDoctrine()->getManager()->persist($user);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         $favorites = $request->cookies->get(self::FAVORITES_COOKIE_NAME);
 
         if (null === $favorites) {
@@ -50,6 +57,13 @@ class AjaxController extends Controller
 
     public function unfavoriteAdAction(Request $request, $id)
     {
+        if (null !== $user = $this->getUser()) {
+            $ad = $this->get('seguso.ad_manager')->find($id);
+            $user->removeFavouriteAd($ad);
+            $this->getDoctrine()->getManager()->persist($user);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         $favorites = $request->cookies->get(self::FAVORITES_COOKIE_NAME);
 
         if (null === $favorites) {
@@ -77,7 +91,7 @@ class AjaxController extends Controller
 
     private function sendEmailNotice($ad)
     {
-
+        // TODO Move this to a better place and set emails from config
         $message = \Swift_Message::newInstance()
             ->setSubject('Anuncio marcado como fraudulento en SegundoUso')
             ->setFrom('dev@segundouso.org')

@@ -29,4 +29,5 @@ SegundoUso\AdBundle\Entity\Mark:
             joinColumn:
                 name: ad_id
                 referencedColumnName: id
+            cascade: ['persist']
     lifecycleCallbacks: { }

@@ -64,6 +64,15 @@ SegundoUso\AdBundle\Entity\Ad:
                 referenceColumnName: id
                 nullable: true
             cascade: ['persist']
+        user:
+            targetEntity: SegundoUso\UserBundle\Entity\User
+            inversedBy: ads
+            joinColumn:
+                name: user_id
+                referenceColumnName: id
+                nullable: true
+                onDelete: CASCADE
+            cascade: ['persist']
         municipality:
             targetEntity: SegundoUso\LocationBundle\Entity\Municipality
             inversedBy: ads
@@ -76,6 +85,8 @@ SegundoUso\AdBundle\Entity\Ad:
         marks:
             targetEntity: Mark
             mappedBy: ad
+            cascade: ['persist', 'remove']
+            orphanRemoval: true
         images:
             targetEntity: Image
             mappedBy: ad
