@@ -1,9 +1,15 @@
-{% extends '::base.html.twig' %}
+{% extends 'SegundoUsoFrontendBundle:Admin:layout.html.twig' %}
 
-{% block body -%}
+{% block content -%}
+
+    <a href="{{ path('admin_category_new') }}" class="btn btn-primary btn-bg pull-right">
+        Create a new category
+    </a>
+
     <h1>Category list</h1>
 
-    <table class="records_list">
+
+    <table class="records_list table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,25 +27,15 @@
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_category_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <div class="btn-group">
+                        <a href="{{ path('admin_category_show', { 'id': entity.id }) }}" class="btn btn-default btn-sm">show</a>
+                        <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}" class="btn btn-default btn-sm">edit</a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('admin_category_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+
     {% endblock %}

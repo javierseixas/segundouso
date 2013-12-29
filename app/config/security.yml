@@ -28,11 +28,11 @@ security:
                 check_path: admin_login_check
                 login_path: admin_login
                 provider: fos_userbundle
-                default_target_path: admin_ad_new
+                default_target_path: segundo_uso_backend_dashboard
 #                csrf_provider: form.csrf_provider
             logout:
                 path:   fos_user_security_logout
-                target: fos_user_security_login
+                target: admin_login
             anonymous:    true
             context:      application
 

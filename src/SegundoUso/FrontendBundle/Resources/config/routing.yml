@@ -79,3 +79,7 @@ segundo_uso_frontend_contact:
 segundo_uso_frontend_collaborate:
     pattern: /colaborar
     defaults: { _controller: SegundoUsoFrontendBundle:Corporate:colaborate }
+
+segundo_uso_backend_dashboard:
+    pattern: /admin/dashboard
+    defaults: { _controller: SegundoUsoFrontendBundle:Admin:dashboard }
