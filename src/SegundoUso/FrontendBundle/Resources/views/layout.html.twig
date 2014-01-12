@@ -34,11 +34,13 @@
                                 <input type="hidden" name="currentRoute" value="{{ app.request.requesturi }}">
                             </div>
                         </form>
-                        <form action="{{ path('segundo_uso_frontend_search') }}" method="post" class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" name="searched_term" id="FLAG_search-input" class="form-control" placeholder="Search">
+                        <form action="{{ path('segundo_uso_frontend_search') }}" method="post" class="" role="search">
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="searched_term" id="FLAG_search-input" class="form-control" placeholder="Buscar">
+                                    <span class="input-group-btn">
+                                        <button type="submit" id="FLAG_search-button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+                                    </span>
                             </div>
-                            <button type="submit" id="FLAG_search-button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                         </form>
                     </div>
                     <div class="col-md-5">

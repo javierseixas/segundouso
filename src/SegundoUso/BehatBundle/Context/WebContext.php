@@ -321,6 +321,7 @@ class WebContext extends MinkContext implements KernelAwareInterface
             new When('I press "FLAG_search-button"'),
         );
     }
+
     /**
      * @Given /^I am on the marked ads page$/
      */
@@ -369,6 +370,56 @@ class WebContext extends MinkContext implements KernelAwareInterface
         } else {
             $tr->clickLink($button);
         }
+    }
+
+    /**
+     * @When /^I click "([^"]*)" button$/
+     */
+    public function iClickButton($text)
+    {
+        $this->pressButton($text);
+    }
+
+    /**
+     * @Then /^the button has changed its text to "([^"]*)"$/
+     */
+    public function theButtonHasChangedItsTextTo($text)
+    {
+        $this->assertPageContainsText($text);
+    }
+
+    /**
+     * @Given /^I am browsing "([^"]*)"$/
+     */
+    public function iAmBrowsing($municipality)
+    {
+        $this->selectOption('municipality', $municipality);
+    }
+
+    /**
+     * @When /^I fill the signup form as "([^"]*)"$/
+     */
+    public function iFillTheSignupForm($username)
+    {
+        $this->fillField('fos_user_registration_form_username', $username);
+        $this->fillField('fos_user_registration_form_email', 'javier.seixas@gmail.com');
+        $this->fillField('fos_user_registration_form_plainPassword_first', '1234');
+        $this->fillField('fos_user_registration_form_plainPassword_second', '1234');
+    }
+
+    /**
+     * @When /^I fill the form with:$/
+     */
+    public function iFillTheFormWith(TableNode $table)
+    {
+        $loginData = $table->getRowsHash();
+
+        print_r($loginData);
+
+        $this->fillField('fos_user_registration_form_username', $loginData['username']);
+        $this->fillField('fos_user_registration_form_email', $loginData['email']);
+        $this->fillField('fos_user_registration_form_plainPassword_first', $loginData['password']);
+        $this->fillField('fos_user_registration_form_plainPassword_second', $loginData['confirm']);
     }
 
 

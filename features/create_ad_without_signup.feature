@@ -15,7 +15,7 @@ Feature: Create an ad without signing up
             | Electrodomésticos |
             | Menaje            |
            # TODO Fix the problem why it doesn't find any security token
-#          And I should not be logged in
+#        And I should not be logged in
 
 
     Scenario: I create an ad successfully from the home
@@ -30,3 +30,6 @@ Feature: Create an ad without signing up
         Given I am on the confirmation page
          When I click the confirmation button
          Then I see the confirmation page
+
+    # TODO Scenario including images
+    Scenario: I create an ad including images successfully
